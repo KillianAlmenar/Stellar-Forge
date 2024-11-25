@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Camera",
+                    "name": "Rotate",
                     "type": "Value",
                     "id": "ddb3b15b-c3da-49ec-89b0-7820ce3bfe4c",
                     "expectedControlType": "Vector2",
@@ -88,7 +88,7 @@
                 {
                     "name": "up",
                     "id": "f9e14bbc-cb3c-44b6-885e-b9c024494b62",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -191,7 +191,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Camera",
+                    "action": "Rotate",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -202,7 +202,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Camera",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -213,7 +213,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Camera",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -224,7 +224,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Camera",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -235,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Camera",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -462,7 +462,7 @@
                 {
                     "name": "Controller",
                     "id": "8e44a7ab-8438-40b7-937f-7cf864108722",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

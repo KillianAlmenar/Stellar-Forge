@@ -46,7 +46,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Camera"",
+                    ""name"": ""Rotate"",
                     ""type"": ""Value"",
                     ""id"": ""ddb3b15b-c3da-49ec-89b0-7820ce3bfe4c"",
                     ""expectedControlType"": ""Vector2"",
@@ -110,7 +110,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""f9e14bbc-cb3c-44b6-885e-b9c024494b62"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -213,7 +213,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Camera"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -224,7 +224,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Camera"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -235,7 +235,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Camera"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -246,7 +246,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Camera"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -257,7 +257,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Camera"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -484,7 +484,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Controller"",
                     ""id"": ""8e44a7ab-8438-40b7-937f-7cf864108722"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -568,7 +568,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+        m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         m_Player_Up = m_Player.FindAction("Up", throwIfNotFound: true);
         m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
         // Spaceship
@@ -640,7 +640,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Camera;
+    private readonly InputAction m_Player_Rotate;
     private readonly InputAction m_Player_Up;
     private readonly InputAction m_Player_Down;
     public struct PlayerActions
@@ -649,7 +649,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public PlayerActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Camera => m_Wrapper.m_Player_Camera;
+        public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputAction @Up => m_Wrapper.m_Player_Up;
         public InputAction @Down => m_Wrapper.m_Player_Down;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -667,9 +667,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Camera.started += instance.OnCamera;
-            @Camera.performed += instance.OnCamera;
-            @Camera.canceled += instance.OnCamera;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
             @Up.started += instance.OnUp;
             @Up.performed += instance.OnUp;
             @Up.canceled += instance.OnUp;
@@ -686,9 +686,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Camera.started -= instance.OnCamera;
-            @Camera.performed -= instance.OnCamera;
-            @Camera.canceled -= instance.OnCamera;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
             @Up.started -= instance.OnUp;
             @Up.performed -= instance.OnUp;
             @Up.canceled -= instance.OnUp;
@@ -804,7 +804,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     {
         void OnJump(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-        void OnCamera(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
     }

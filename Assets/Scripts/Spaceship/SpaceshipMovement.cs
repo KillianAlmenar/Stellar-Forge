@@ -62,6 +62,7 @@ public class SpaceshipMovement : Movement
 
         move += moveVec.x * transform.right;
         move += moveVec.y * transform.forward;
+        Debug.Log(move);
 
         if (up)
         {

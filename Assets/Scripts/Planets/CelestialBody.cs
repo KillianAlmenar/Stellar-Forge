@@ -21,10 +21,24 @@ public class CelestialBody : MonoBehaviour
     [SerializeField] public List<GameObject> objAttracked = new List<GameObject>();
     [SerializeField] private GameObject lightSource;
 
+    private void Awake()
+    {
+        foreach(GameObject obj in objAttracked)
+        {
+            if (!GameManager.instance.UniversalObject.Contains(obj))
+            {
+                obj.GetComponent<MovableObj>().PlanetReference = this.gameObject;
+            }
+        }
+    }
+
     private void Start()
     {
         mass = GetComponent<Rigidbody>().mass;
-        objAttracked.Add(GameManager.instance.Player);
+        foreach(GameObject obj in GameManager.instance.UniversalObject)
+        {
+            objAttracked.Add(obj);
+        }
     }
 
     private void FixedUpdate()
@@ -42,15 +56,15 @@ public class CelestialBody : MonoBehaviour
 
             Vector3 gravity = distance.normalized * acceleration;
 
-            if (obj == GameManager.instance.Player)
+            if (obj == GameManager.instance.UniversalObject.Contains(obj))
             {
 
-                if (obj.GetComponent<PlayerPhysics>().onPlanet)
+                if (obj.GetComponent<SFPhysics>().onPlanet)
                 {
-                    distance = obj.GetComponent<PlayerPhysics>().planetCollisionPoint - obj.transform.position;
+                    distance = obj.GetComponent<SFPhysics>().planetCollisionPoint - obj.transform.position;
                 }
 
-                Vector3 gravityPlayer = obj.GetComponent<PlayerPhysics>().forceMultiplier * distance.normalized * acceleration;
+                Vector3 gravityPlayer = obj.GetComponent<SFPhysics>().forceMultiplier * distance.normalized * acceleration;
 
                 obj.GetComponent<MovableObj>().Rigidbody.AddForce(gravityPlayer, ForceMode.Acceleration);
 
@@ -96,9 +110,9 @@ public class CelestialBody : MonoBehaviour
         }
         else
         {
-            if (distance < alignRadius && obj == GameManager.instance.Player)
+            if (distance < alignRadius && obj == GameManager.instance.UniversalObject.Contains(obj))
             {
-                obj.GetComponent<PlayerPhysics>().AlignPlayer(transform);
+                obj.GetComponent<SFPhysics>().AlignTarget(transform);
             }
 
             //attenuation exponent of gravity
