@@ -808,7 +808,7 @@ MonoBehaviour:
   Sun: {fileID: 1723705966}
   Line: 1
   gravitationalConstant: 10
-  onShip: 1
+  onShip: 0
 --- !u!1 &247558270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 0
+  isEllipsal: 1
   PlanetReference: {fileID: 1723705966}
 --- !u!1 &458983298
 GameObject:
@@ -2414,7 +2414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1019894346
 MonoBehaviour:
   m_ObjectHideFlags: 0
