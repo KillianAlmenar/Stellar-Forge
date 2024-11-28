@@ -35,6 +35,7 @@ public class CelestialBody : MonoBehaviour
     private void Start()
     {
         mass = GetComponent<Rigidbody>().mass;
+
         foreach(GameObject obj in GameManager.instance.UniversalObject)
         {
             objAttracked.Add(obj);

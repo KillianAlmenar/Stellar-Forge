@@ -458,7 +458,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 0
-  isEllipsal: 0
   PlanetReference: {fileID: 0}
 --- !u!135 &1059711911
 SphereCollider:
@@ -729,10 +728,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5243e296706f0a943901e2c445c5c384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 857117864}
+  UniversalObject:
+  - {fileID: 857117864}
   Sun: {fileID: 0}
   Line: 0
   gravitationalConstant: 10
+  onShip: 0
 --- !u!4 &1992384889
 Transform:
   m_ObjectHideFlags: 0

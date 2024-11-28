@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.46600214, g: 0.48676875, b: 0.5283019, a: 1}
+  m_AmbientSkyColor: {r: 0.2750222, g: 0.28657776, b: 0.312, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -399,7 +399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 0
-  isEllipsal: 0
   PlanetReference: {fileID: 0}
 --- !u!1 &155367758
 GameObject:
@@ -741,7 +740,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 0
   PlanetReference: {fileID: 0}
 --- !u!4 &208160967 stripped
 Transform:
@@ -806,7 +804,7 @@ MonoBehaviour:
   UniversalObject:
   - {fileID: 1366258020}
   Sun: {fileID: 1723705966}
-  Line: 1
+  Line: 0
   gravitationalConstant: 10
   onShip: 0
 --- !u!1 &247558270
@@ -1057,7 +1055,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 0
-  isEllipsal: 0
   PlanetReference: {fileID: 0}
 --- !u!1 &257371514
 GameObject:
@@ -1336,7 +1333,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 0
   PlanetReference: {fileID: 1723705966}
 --- !u!114 &257371525
 MonoBehaviour:
@@ -1639,7 +1635,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 1
   PlanetReference: {fileID: 1723705966}
 --- !u!1 &458983298
 GameObject:
@@ -1896,7 +1891,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 0
   PlanetReference: {fileID: 1723705966}
 --- !u!114 &458983308
 MonoBehaviour:
@@ -2216,7 +2210,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1828820448725023875, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: isEquiped
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828820448725023875, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
+      propertyPath: speedOnEquiped
+      value: 0.000000001
       objectReference: {fileID: 0}
     - target: {fileID: 5990616262827802352, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2414,7 +2412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1019894346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2428,7 +2426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 0
-  isEllipsal: 0
   PlanetReference: {fileID: 0}
   onPlanet: 0
   timeWithoutAlign: 0
@@ -2451,7 +2448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMoving: 0
   isEquiped: 1
-  speedOnEquiped: 0.05
+  speedOnEquiped: 0.00000001
   speedCombiUpDown: 0.05
   rotationForce: 1
   camRotForce: 1
@@ -2817,7 +2814,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 0
-  isEllipsal: 0
   PlanetReference: {fileID: 0}
 --- !u!1 &1058480535
 GameObject:
@@ -4000,7 +3996,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 0
   PlanetReference: {fileID: 1723705966}
 --- !u!114 &1900443539
 MonoBehaviour:
@@ -4301,7 +4296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 1
-  isEllipsal: 0
   PlanetReference: {fileID: 1723705966}
 --- !u!1 &2001282662
 GameObject:

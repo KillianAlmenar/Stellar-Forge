@@ -7,7 +7,6 @@ public class MovableObj : MonoBehaviour
 {
     protected Rigidbody rb;
     [SerializeField] private bool isOrbital = false;
-    [SerializeField] private bool isEllipsal = false;
     [HideInInspector] public GameObject PlanetReference;
     private LineRenderer lineRenderer;
 
@@ -39,11 +38,6 @@ public class MovableObj : MonoBehaviour
             Vector3 tangentialDirection = Vector3.Cross(directionToPlanet.normalized, Vector3.up).normalized;
 
             Vector3 initialSpeed = tangentialDirection * orbitalSpeed;
-
-            if(isEllipsal)
-            {
-                initialSpeed /= 1.25f;
-            }
 
             rb.AddForce(initialSpeed, ForceMode.VelocityChange);
         }
