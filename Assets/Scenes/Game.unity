@@ -807,6 +807,7 @@ MonoBehaviour:
   Line: 0
   gravitationalConstant: 10
   onShip: 0
+  Player: {fileID: 1366258020}
 --- !u!1 &247558270
 GameObject:
   m_ObjectHideFlags: 0

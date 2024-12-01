@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public bool Line = false;
     [SerializeField]public float gravitationalConstant = 10f;
     public bool onShip = false;
-
+    public GameObject Player;
+    
     private void Awake()
     {
         if(instance == null)
