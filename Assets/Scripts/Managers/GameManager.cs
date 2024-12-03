@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 
         gameInput = new GameInput();
         gameInput.Enable();
+        gameInput.UI.Disable();
     }
 
     private void FixedUpdate()

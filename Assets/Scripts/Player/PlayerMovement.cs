@@ -31,6 +31,7 @@ public class PlayerMovement : Movement
         GameManager.instance.gameInput.Player.Down.performed += OnDownPerformed;
         GameManager.instance.gameInput.Player.Up.canceled += OnUpCanceled;
         GameManager.instance.gameInput.Player.Down.canceled += OnDownCanceled;
+        GameManager.instance.gameInput.Player.Inventory.performed += OnInventoryPerformed;
     }
 
     private void OnDisable()
@@ -44,6 +45,7 @@ public class PlayerMovement : Movement
         GameManager.instance.gameInput.Player.Down.performed -= OnDownPerformed;
         GameManager.instance.gameInput.Player.Up.canceled -= OnUpCanceled;
         GameManager.instance.gameInput.Player.Down.canceled -= OnDownCanceled;
+        GameManager.instance.gameInput.Player.Inventory.performed -= OnInventoryPerformed;
     }
 
     private void FixedUpdate()
@@ -125,6 +127,13 @@ public class PlayerMovement : Movement
         {
             jumpBtn = true;
         }
+    }
+
+    private void OnInventoryPerformed(InputAction.CallbackContext ctx)
+    {
+        GameManager.instance.gameInput.Player.Disable();
+        GameManager.instance.gameInput.UI.Enable();
+        InventoryUI.instance.isDisplay = true;
     }
 
 }

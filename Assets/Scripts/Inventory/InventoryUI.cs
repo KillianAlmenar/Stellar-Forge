@@ -479,7 +479,7 @@ public class InventoryUI : MonoBehaviour
         {
             informationUI.SetActive(false);
             interaction.SetActive(false);
-            EventSystem.current.SetSelectedGameObject(previousObjectSelected);         
+            EventSystem.current.SetSelectedGameObject(previousObjectSelected);
         }
 
     }

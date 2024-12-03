@@ -10,6 +10,7 @@ public class SelectItem : MonoBehaviour
     private void Start()
     {
         playerInventory = GameManager.instance.Player.GetComponent<Inventory>();
+
     }
 
     public void buttonPressed()

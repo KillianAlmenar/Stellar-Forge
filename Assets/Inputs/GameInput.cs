@@ -71,6 +71,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""c53a8132-e062-443a-9be3-42ddf4a9cd92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -302,6 +311,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c63bb97-5ddb-48ad-93b8-adb5e83028e8"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12a761f9-9672-41ec-9f81-12a66da3bf62"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -537,6 +568,76 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""a63487e4-5195-4937-8b78-268b5733cb90"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""70c06783-dfcd-4323-9a3a-5780ba57aac2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb88351a-5418-4f60-aeff-b5481f974d82"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3d003e44-c3fc-43a4-bd3d-bbf0875d2d3d"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CloseInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9774163b-0371-4e66-be23-321d86e57c07"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CloseInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b496d28b-4da6-4894-9944-40635e4d9808"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d1029c5-7937-4313-8db6-3e389537692a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -571,12 +672,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         m_Player_Up = m_Player.FindAction("Up", throwIfNotFound: true);
         m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
+        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         // Spaceship
         m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
         m_Spaceship_Move = m_Spaceship.FindAction("Move", throwIfNotFound: true);
         m_Spaceship_Up = m_Spaceship.FindAction("Up", throwIfNotFound: true);
         m_Spaceship_Down = m_Spaceship.FindAction("Down", throwIfNotFound: true);
         m_Spaceship_Rotate = m_Spaceship.FindAction("Rotate", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_CloseInventory = m_UI.FindAction("CloseInventory", throwIfNotFound: true);
+        m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -643,6 +749,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Rotate;
     private readonly InputAction m_Player_Up;
     private readonly InputAction m_Player_Down;
+    private readonly InputAction m_Player_Inventory;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
@@ -652,6 +759,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputAction @Up => m_Wrapper.m_Player_Up;
         public InputAction @Down => m_Wrapper.m_Player_Down;
+        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -676,6 +784,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Down.started += instance.OnDown;
             @Down.performed += instance.OnDown;
             @Down.canceled += instance.OnDown;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -695,6 +806,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Down.started -= instance.OnDown;
             @Down.performed -= instance.OnDown;
             @Down.canceled -= instance.OnDown;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -782,6 +896,60 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public SpaceshipActions @Spaceship => new SpaceshipActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_CloseInventory;
+    private readonly InputAction m_UI_Back;
+    public struct UIActions
+    {
+        private @GameInput m_Wrapper;
+        public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseInventory => m_Wrapper.m_UI_CloseInventory;
+        public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @CloseInventory.started += instance.OnCloseInventory;
+            @CloseInventory.performed += instance.OnCloseInventory;
+            @CloseInventory.canceled += instance.OnCloseInventory;
+            @Back.started += instance.OnBack;
+            @Back.performed += instance.OnBack;
+            @Back.canceled += instance.OnBack;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @CloseInventory.started -= instance.OnCloseInventory;
+            @CloseInventory.performed -= instance.OnCloseInventory;
+            @CloseInventory.canceled -= instance.OnCloseInventory;
+            @Back.started -= instance.OnBack;
+            @Back.performed -= instance.OnBack;
+            @Back.canceled -= instance.OnBack;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -807,6 +975,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnRotate(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
     }
     public interface ISpaceshipActions
     {
@@ -814,5 +983,10 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnCloseInventory(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }

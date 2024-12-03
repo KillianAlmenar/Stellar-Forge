@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2441596769476956642}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -66,11 +66,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 50000
-  field of view: 26.991467
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -204,6 +204,9 @@ GameObject:
   - component: {fileID: 1828820448725023875}
   - component: {fileID: 6270778693040710483}
   - component: {fileID: 2719120196355930541}
+  - component: {fileID: 1435185666101098317}
+  - component: {fileID: 2846283346051413448}
+  - component: {fileID: 2047605102858936036}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -340,16 +343,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOrbital: 0
+  isEllipsal: 0
   PlanetReference: {fileID: 0}
   onPlanet: 0
-  jumpBtn: 0
-  isJumping: 0
   timeWithoutAlign: 0
-  forceMultiplier: 100
-  alignSpeed: 5
   planetNormal: {x: 0, y: 0, z: 0}
-  planetCollisionPoint: {x: 0, y: 0, z: 0}
+  alignSpeed: 0.5
+  forceMultiplier: 10
   speed: 0
+  planetCollisionPoint: {x: 0, y: 0, z: 0}
+  isJumping: 0
 --- !u!114 &1828820448725023875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,15 +365,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dec15649b78d504887dab4e9ca12e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedOnPlanet: 15
-  speedOnEquiped: 1
-  speedCombiUpDown: 0.05
-  jumpForce: 10
+  isMoving: 0
+  isEquiped: 0
+  speedOnEquiped: 0.000000001
+  speedCombiUpDown: 1
   rotationForce: 1
   camRotForce: 1
+  speedOnPlanet: 5
+  jumpForce: 10
+  jumpBtn: 0
   head: {fileID: 2441596769476956642}
-  isEquiped: 0
-  isMoving: 0
 --- !u!114 &6270778693040710483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,3 +412,74 @@ MonoBehaviour:
   fuelLost: 0.6060606
   movement: {fileID: 1828820448725023875}
   physic: {fileID: 8451686312162161849}
+--- !u!114 &1435185666101098317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015072178433296990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3112a50dafba824286669a25d63b9bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 2441596769476956642}
+--- !u!114 &2846283346051413448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015072178433296990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3112a50dafba824286669a25d63b9bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 2441596769476956642}
+--- !u!114 &2047605102858936036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015072178433296990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb5aa0f85ce1954ca4df845f315c2b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 919f307e2ea04e8499df050665df5fee, type: 2}
+  - {fileID: 11400000, guid: 25a0c8a8ddf37a642859f1c3b3c5870c, type: 2}
+  - {fileID: 11400000, guid: 1c2faa27fe1502a4e95db7bf4afbbf9d, type: 2}
+  - {fileID: 11400000, guid: 8a2975c5f5036894f9f4beeef9a4432f, type: 2}
+  - {fileID: 11400000, guid: 39a375caec1e13648bce0d32fe607fd2, type: 2}
+  - {fileID: 11400000, guid: beb29e7303b7ab24fb2a97040d26cb48, type: 2}
+  - {fileID: 11400000, guid: 2e002194e1730304b899c71f76b80d19, type: 2}
+  - {fileID: 11400000, guid: 0997f4c836fb6744d965f3c306c0e77a, type: 2}
+  - {fileID: 11400000, guid: af77abf7f36c3c345b55851697946226, type: 2}
+  - {fileID: 11400000, guid: d2de1cb1f0ce6994da61ec30368e3729, type: 2}
+  - {fileID: 11400000, guid: ec1a957c86be39a4d9e064134053fa74, type: 2}
+  - {fileID: 11400000, guid: b9562243922c9cb45af4bcdb44885373, type: 2}
+  - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
+  - {fileID: 11400000, guid: 31228d5bfdb302d4daa762524dc194bf, type: 2}
+  - {fileID: 11400000, guid: 33d32d24cc9caa64a8013b99b09e62e8, type: 2}
+  - {fileID: 11400000, guid: ec1a957c86be39a4d9e064134053fa74, type: 2}
+  - {fileID: 11400000, guid: b9562243922c9cb45af4bcdb44885373, type: 2}
+  - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
+  - {fileID: 11400000, guid: 31228d5bfdb302d4daa762524dc194bf, type: 2}
+  - {fileID: 11400000, guid: 33d32d24cc9caa64a8013b99b09e62e8, type: 2}
+  - {fileID: 11400000, guid: 52c09b044aad3c343a91df1c7f89fed1, type: 2}
+  - {fileID: 11400000, guid: cf08a317437eb91479fedfe0b235198d, type: 2}
+  - {fileID: 11400000, guid: 9ae0bb1f4ae5c04428a0f2f6b62decfd, type: 2}
+  - {fileID: 11400000, guid: d05d65cc9ee1d6143b9660becdd8709c, type: 2}
+  - {fileID: 11400000, guid: 32581dc3c83349540a130a01f135dd87, type: 2}
+  - {fileID: 11400000, guid: b9562243922c9cb45af4bcdb44885373, type: 2}
+  - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
+  - {fileID: 11400000, guid: b9562243922c9cb45af4bcdb44885373, type: 2}
+  - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
+  - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
+  - {fileID: 11400000, guid: 8a2975c5f5036894f9f4beeef9a4432f, type: 2}
+  selectedItem: {fileID: 0}
