@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,10 @@ public class PlayerMovement : Movement
     private Vector3 jumpVector = Vector3.zero;
 
     [SerializeField] private GameObject head;
+
+    private Vector3 targetRotationVec = Vector3.zero;
+    private Vector3 targetCamVec = Vector3.zero;
+    [SerializeField] private float rotationDamping = 10f;
 
     private void Start()
     {
@@ -50,28 +55,45 @@ public class PlayerMovement : Movement
 
     private void FixedUpdate()
     {
-        Rotate();
         Move();
+    }
+
+    private void Update()
+    {
+        Rotate();
+
     }
 
     private void Rotate()
     {
-        transform.Rotate(rotationVec);
+        float speedMultiplier;
 
+        if (GameManager.instance.onKeyboard)
+        {
+            speedMultiplier = Settings.instance.mouseSensitivity;
+        }
+        else
+        {
+            speedMultiplier = Settings.instance.gamepadSensitivity;
+        }
+
+        transform.Rotate(rotationVec * speedMultiplier);
 
         if (physicsScript.onPlanet || physicsScript.timeWithoutAlign < 1)
         {
-            head.transform.Rotate(camVec);
+            head.transform.Rotate(camVec * speedMultiplier);
 
-            if (head.transform.localRotation.eulerAngles.x > 80 || head.transform.localRotation.eulerAngles.x <= 30)
+            if (head.transform.localRotation.eulerAngles.x > 100 || head.transform.localRotation.eulerAngles.x <= 30)
             {
-                head.transform.Rotate(-camVec);
+                head.transform.Rotate(-camVec * speedMultiplier);
 
             }
         }
         else if (isEquiped)
         {
-            transform.Rotate(camVec);
+            //Debug.Log(head.transform.rotation);
+            head.transform.localRotation = new Quaternion(0.6f, 0, 0, 1);
+            transform.Rotate(camVec * speedMultiplier);
         }
     }
 
@@ -99,6 +121,7 @@ public class PlayerMovement : Movement
         }
         else if (isEquiped)
         {
+            jumpBtn = false;
             move += moveVec.x * transform.right;
             move += moveVec.y * transform.forward;
 

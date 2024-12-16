@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]public float gravitationalConstant = 10f;
     public bool onShip = false;
     public GameObject Player;
-    
+    public bool onKeyboard = true;
+
     private void Awake()
     {
         if(instance == null)
@@ -22,12 +24,17 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
 
         gameInput = new GameInput();
         gameInput.Enable();
         gameInput.UI.Disable();
+    }
+
+    private void Start()
+    {
+       Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void FixedUpdate()

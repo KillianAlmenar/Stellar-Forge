@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 6270778693040710483}
   - component: {fileID: 2719120196355930541}
   - component: {fileID: 1435185666101098317}
-  - component: {fileID: 2846283346051413448}
   - component: {fileID: 2047605102858936036}
   m_Layer: 0
   m_Name: Player
@@ -375,6 +374,7 @@ MonoBehaviour:
   jumpForce: 10
   jumpBtn: 0
   head: {fileID: 2441596769476956642}
+  rotationDamping: 10
 --- !u!114 &6270778693040710483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,19 +413,6 @@ MonoBehaviour:
   movement: {fileID: 1828820448725023875}
   physic: {fileID: 8451686312162161849}
 --- !u!114 &1435185666101098317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6015072178433296990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3112a50dafba824286669a25d63b9bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  head: {fileID: 2441596769476956642}
---- !u!114 &2846283346051413448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class SFPhysics : MovableObj
 {
     public bool onPlanet = false;
-    [HideInInspector] public float timeWithoutAlign = 0;
+    [HideInInspector] public float timeWithoutAlign = 1;
     [HideInInspector] public Vector3 planetNormal;
     [SerializeField] protected float alignSpeed = 1;
     [HideInInspector] protected bool isAlign = false;

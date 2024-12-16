@@ -272,6 +272,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3cc162c9-9ba3-47f9-a653-30637024fe06"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2f512db1-7567-4cbc-aa08-38e0c2afee18"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",

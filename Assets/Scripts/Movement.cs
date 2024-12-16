@@ -32,6 +32,15 @@ public class Movement : MonoBehaviour
     {
         moveVec = ctx.ReadValue<Vector2>();
         isMoving = true;
+
+        if (ctx.action.activeControl.device.name == "Keyboard" && !GameManager.instance.onKeyboard)
+        {
+            GameManager.instance.onKeyboard = true;
+        }
+        else if (GameManager.instance.onKeyboard)
+        {
+            GameManager.instance.onKeyboard = false;
+        }
     }
 
     protected void OnMoveCanceled(InputAction.CallbackContext ctx)
@@ -83,10 +92,18 @@ public class Movement : MonoBehaviour
 
     protected void OnRotatePerformed(InputAction.CallbackContext ctx)
     {
-        rotationVec = new Vector3(0, ctx.ReadValue<Vector2>().x * rotationForce, 0);
+        rotationVec = new Vector3(0, ctx.ReadValue<Vector2>().x, 0);
 
-        camVec = new Vector3(-ctx.ReadValue<Vector2>().y * camRotForce, 0, 0);
+        camVec = new Vector3(-ctx.ReadValue<Vector2>().y, 0, 0);
 
+        if(ctx.action.activeControl.device.name == "Mouse" && !GameManager.instance.onKeyboard)
+        {
+            GameManager.instance.onKeyboard = true;
+        }
+        else if (ctx.action.activeControl.device.name != "Mouse" && GameManager.instance.onKeyboard)
+        {
+            GameManager.instance.onKeyboard = false;
+        }
     }
 
     protected void OnRotateCanceled(InputAction.CallbackContext ctx)

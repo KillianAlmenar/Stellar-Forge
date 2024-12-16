@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SkyboxCamera
   - Spaceship
+  - Module Slot
   layers:
   - Default
   - TransparentFX
