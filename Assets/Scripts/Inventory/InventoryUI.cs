@@ -205,6 +205,7 @@ public class InventoryUI : MonoBehaviour
 
     private void DesactivateUI()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         foreach (Transform child in contentUI.transform)
         {
             Destroy(child.gameObject);
