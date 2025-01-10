@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Consommable", menuName = "Item/Create New Consommable")]
-public class Consommable : Item
+public class Consommable : ItemInventory
 {
-    private void OnValidate()
+    private new void OnValidate()
     {
+        base.OnValidate();
         type = TYPE.CONSOMMABLE;
     }
 

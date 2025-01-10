@@ -206,9 +206,10 @@ GameObject:
   - component: {fileID: 2719120196355930541}
   - component: {fileID: 1435185666101098317}
   - component: {fileID: 2047605102858936036}
+  - component: {fileID: 2934023041393823771}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -351,6 +352,7 @@ MonoBehaviour:
   forceMultiplier: 10
   speed: 0
   planetCollisionPoint: {x: 0, y: 0, z: 0}
+  onStation: 0
   isJumping: 0
 --- !u!114 &1828820448725023875
 MonoBehaviour:
@@ -365,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 0
-  isEquiped: 0
+  isEquiped: 1
   speedOnEquiped: 0.000000001
   speedCombiUpDown: 1
   rotationForce: 1
@@ -470,3 +472,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
   - {fileID: 11400000, guid: 8a2975c5f5036894f9f4beeef9a4432f, type: 2}
   selectedItem: {fileID: 0}
+--- !u!114 &2934023041393823771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015072178433296990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dafd4d974fdbdb14fb5b6392931a43ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraHead: {fileID: 2441596769476956642}
+  obj: {fileID: 0}
+  distance: 5
+  hologramMat: {fileID: 2100000, guid: 0a4e793dbc2ddf340992b1dcfa4a288b, type: 2}

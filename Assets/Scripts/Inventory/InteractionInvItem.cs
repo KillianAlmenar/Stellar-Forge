@@ -42,7 +42,7 @@ public class InteractionInvItem : MonoBehaviour
 
     public void UseQuantityPressed()
     {
-        Item item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
+        ItemInventory item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
 
 
         if (item.stackSize == 1 || GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)
@@ -64,7 +64,7 @@ public class InteractionInvItem : MonoBehaviour
 
     public void DestroyPressed()
     {
-        Item item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
+        ItemInventory item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
 
 
         if (item.stackSize == 1 || GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)

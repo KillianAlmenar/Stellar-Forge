@@ -7,7 +7,7 @@ public class QuantitySelection : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI quantityText;
     private int quantity;
-    Item item;
+    ItemInventory item;
     public bool useButton = false;
 
     private void Update()
@@ -64,9 +64,9 @@ public class QuantitySelection : MonoBehaviour
     {
         item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
 
-        List<Item> itemToDestroy = new List<Item>();
+        List<ItemInventory> itemToDestroy = new List<ItemInventory>();
 
-        foreach (Item testedItem in GameManager.instance.Player.GetComponent<Inventory>().items)
+        foreach (ItemInventory testedItem in GameManager.instance.Player.GetComponent<Inventory>().items)
         {
             if (quantity > 0)
             {
@@ -88,7 +88,7 @@ public class QuantitySelection : MonoBehaviour
             }
         }
 
-        foreach (Item testtedItem in itemToDestroy)
+        foreach (ItemInventory testtedItem in itemToDestroy)
         {
             GameManager.instance.Player.GetComponent<Inventory>().items.Remove(testtedItem);
         }

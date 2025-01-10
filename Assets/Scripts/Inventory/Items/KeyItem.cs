@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New KeyItem", menuName = "Item/Create New KeyItem")]
-public class KeyItem : Item
+public class KeyItem : ItemInventory
 {
-    private void OnValidate()
+    private new void OnValidate()
     {
+        base.OnValidate();
         type = TYPE.KEYITEM;
     }
 }

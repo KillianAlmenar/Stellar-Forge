@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerPhysics : SFPhysics
 {
     public bool isJumping = false;
+    public bool inSpace = false;
     private PlayerMovement move;
 
     private void Start()
@@ -14,7 +15,7 @@ public class PlayerPhysics : SFPhysics
     {
         if (collision.gameObject.GetComponent<CelestialBody>() != null)
         {
-            if (!onPlanet)
+            if (!onPlanet && collision.transform.tag != "Station")
             {
                 PlanetReference = collision.gameObject;
                 PlanetSettings();
@@ -39,7 +40,7 @@ public class PlayerPhysics : SFPhysics
                 isJumping = true;
             }
 
-            if (onPlanet)
+            if (onPlanet && !onStation)
             {
                 SpaceSettings();
                 onPlanet = false;
@@ -49,6 +50,15 @@ public class PlayerPhysics : SFPhysics
 
     private void FixedUpdate()
     {
+        if (onStation && !rb.useGravity) 
+        {
+            StationSettings();
+        }
+        else if(!onPlanet && !onStation && !inSpace)
+        {
+            SpaceSettings();
+        }
+
         PlanetNormal();
     }
 
@@ -57,20 +67,34 @@ public class PlayerPhysics : SFPhysics
         base.Update();
     }
 
-    private void PlanetSettings()
+    public void StationSettings()
     {
+        inSpace = false;
+        onPlanet = true;
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+        forceMultiplier = 10f;
+    }
+
+    public void PlanetSettings()
+    {
+        inSpace = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         alignSpeed = 25;
         forceMultiplier = 10f;
     }
 
-    private void SpaceSettings()
+    public void SpaceSettings()
     {
         if (!isJumping)
         {
+            inSpace = true;
+            rb.velocity = Vector3.zero;
             rb.constraints = RigidbodyConstraints.None;
             alignSpeed = 0.5f;
         }
+        rb.useGravity = false;
         forceMultiplier = 100;
     }
 

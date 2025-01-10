@@ -8,7 +8,7 @@ public class MovableObj : MonoBehaviour
     protected Rigidbody rb;
     [SerializeField] private bool isOrbital = false;
     [SerializeField] private bool isEllipsal = false;
-    [HideInInspector] public GameObject PlanetReference;
+    [SerializeField] public GameObject PlanetReference;
     private LineRenderer lineRenderer;
 
     private void Awake()

@@ -36,7 +36,6 @@ public class PlayerMovement : Movement
         GameManager.instance.gameInput.Player.Down.performed += OnDownPerformed;
         GameManager.instance.gameInput.Player.Up.canceled += OnUpCanceled;
         GameManager.instance.gameInput.Player.Down.canceled += OnDownCanceled;
-        GameManager.instance.gameInput.Player.Inventory.performed += OnInventoryPerformed;
     }
 
     private void OnDisable()
@@ -50,7 +49,6 @@ public class PlayerMovement : Movement
         GameManager.instance.gameInput.Player.Down.performed -= OnDownPerformed;
         GameManager.instance.gameInput.Player.Up.canceled -= OnUpCanceled;
         GameManager.instance.gameInput.Player.Down.canceled -= OnDownCanceled;
-        GameManager.instance.gameInput.Player.Inventory.performed -= OnInventoryPerformed;
     }
 
     private void FixedUpdate()
@@ -61,7 +59,6 @@ public class PlayerMovement : Movement
     private void Update()
     {
         Rotate();
-
     }
 
     private void Rotate()
@@ -91,7 +88,6 @@ public class PlayerMovement : Movement
         }
         else if (isEquiped)
         {
-            //Debug.Log(head.transform.rotation);
             head.transform.localRotation = new Quaternion(0.6f, 0, 0, 1);
             transform.Rotate(camVec * speedMultiplier);
         }
@@ -103,7 +99,6 @@ public class PlayerMovement : Movement
 
         if (physicsScript.onPlanet)
         {
-
             move += moveVec.x * transform.right;
             move += moveVec.y * transform.forward;
 
@@ -125,7 +120,6 @@ public class PlayerMovement : Movement
             move += moveVec.x * transform.right;
             move += moveVec.y * transform.forward;
 
-
             if (up)
             {
                 move += transform.up * speedCombiUpDown;
@@ -146,17 +140,10 @@ public class PlayerMovement : Movement
 
     private void OnJumpPerformed(InputAction.CallbackContext ctx)
     {
-        if (physicsScript.onPlanet)
+        if (physicsScript.onPlanet && !physicsScript.onStation)
         {
             jumpBtn = true;
         }
-    }
-
-    private void OnInventoryPerformed(InputAction.CallbackContext ctx)
-    {
-        GameManager.instance.gameInput.Player.Disable();
-        GameManager.instance.gameInput.UI.Enable();
-        InventoryUI.instance.isDisplay = true;
     }
 
 }

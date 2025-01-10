@@ -13,12 +13,12 @@ public class SFPhysics : MovableObj
     public float forceMultiplier = 1;
     [SerializeField] private float speed = 0;
     [HideInInspector] public Vector3 planetCollisionPoint;
+    public bool onStation = false;
 
     protected void Update()
     {
         timeWithoutAlign += Time.deltaTime;
         speed = rb.velocity.magnitude;
-
     }
 
     public void AlignTarget(Transform target)

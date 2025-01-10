@@ -5,7 +5,7 @@ using UnityEngine;
 public class SelectItem : MonoBehaviour
 {
     [SerializeField] private Inventory playerInventory;
-    public Item item;
+    public ItemInventory item;
 
     private void Start()
     {

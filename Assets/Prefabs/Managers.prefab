@@ -138,5 +138,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f9c016e61127f41b9fb26533cda50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1
-  gamepadSensitivity: 1
+  mouseSensitivity: 0.05
+  gamepadSensitivity: 0.25

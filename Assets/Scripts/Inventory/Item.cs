@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : ScriptableObject
+public class ItemInventory : ScriptableObject
 {
     public enum TYPE
     {
@@ -26,5 +26,10 @@ public class Item : ScriptableObject
     public Sprite icon;
     public int stackSize;
     public int id;
+
+    protected void OnValidate()
+    {
+        id = name.GetHashCode();
+    }
 
 }

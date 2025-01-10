@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New Armor", menuName = "Item/Create New Armor")]
-public class Armor : Item
+public class Armor : ItemInventory
 {
-    private void OnValidate()
+    private new void OnValidate()
     {
+        base.OnValidate();
         type = TYPE.ARMOR;
     }
 

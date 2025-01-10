@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Item/Create New Weapon")]
-public class Weapon : Item
+public class Weapon : ItemInventory
 {
     public GameObject weaponVisual;
 
-    private void OnValidate()
+    private new void OnValidate()
     {
+        base.OnValidate();
         type = TYPE.WEAPON;
     }
 

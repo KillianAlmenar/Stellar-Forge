@@ -80,6 +80,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BuildMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""17f322b4-6514-4cd0-93f9-23213a5999a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -344,6 +353,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2007e18-9255-41a3-b063-13c9ee8d31f5"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""BuildMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""520ea927-247d-4eff-a285-0a1f092469be"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BuildMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -684,6 +715,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_Up = m_Player.FindAction("Up", throwIfNotFound: true);
         m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
+        m_Player_BuildMenu = m_Player.FindAction("BuildMenu", throwIfNotFound: true);
         // Spaceship
         m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
         m_Spaceship_Move = m_Spaceship.FindAction("Move", throwIfNotFound: true);
@@ -761,6 +793,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Up;
     private readonly InputAction m_Player_Down;
     private readonly InputAction m_Player_Inventory;
+    private readonly InputAction m_Player_BuildMenu;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
@@ -771,6 +804,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Up => m_Wrapper.m_Player_Up;
         public InputAction @Down => m_Wrapper.m_Player_Down;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
+        public InputAction @BuildMenu => m_Wrapper.m_Player_BuildMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -798,6 +832,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
+            @BuildMenu.started += instance.OnBuildMenu;
+            @BuildMenu.performed += instance.OnBuildMenu;
+            @BuildMenu.canceled += instance.OnBuildMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -820,6 +857,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
+            @BuildMenu.started -= instance.OnBuildMenu;
+            @BuildMenu.performed -= instance.OnBuildMenu;
+            @BuildMenu.canceled -= instance.OnBuildMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -987,6 +1027,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
+        void OnBuildMenu(InputAction.CallbackContext context);
     }
     public interface ISpaceshipActions
     {

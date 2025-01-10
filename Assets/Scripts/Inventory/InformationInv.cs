@@ -13,7 +13,7 @@ public class InformationInv : MonoBehaviour
     [SerializeField] private TextMeshProUGUI weight;
     [SerializeField] private Image icon;
 
-    public void SetInformations(Item _selectedItem)
+    public void SetInformations(ItemInventory _selectedItem)
     {
         itemName.text = _selectedItem.name;
         description.text = _selectedItem.description;
@@ -21,13 +21,13 @@ public class InformationInv : MonoBehaviour
 
         switch(_selectedItem.rarity)
         {
-            case Item.RARITY.COMMUN:
+            case ItemInventory.RARITY.COMMUN:
                 rarity.text = "Commun item";
                 break;
-            case Item.RARITY.RARE:
+            case ItemInventory.RARITY.RARE:
                 rarity.text = "Rare item";
                 break;
-            case Item.RARITY.LEGENDARY:
+            case ItemInventory.RARITY.LEGENDARY:
                 rarity.text = "Legendary item";
                 break;
         }

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
 public class InventoryUI : MonoBehaviour
 {
     public bool isDisplay = false;
@@ -14,14 +15,14 @@ public class InventoryUI : MonoBehaviour
     public GameObject itemUI;
     public GameObject contentUI;
     public TMP_Dropdown sortingDropDown;
-    public List<Item> allItem;
     public GameObject informationUI;
-    public Item selectedItem;
+    public ItemInventory selectedItem;
     public GameObject interaction;
     static public InventoryUI instance = null;
     private List<bool> sortingTypeBool = new List<bool> { false, false, false, false };
     public GameObject buttonPressed = null;
     private GameObject previousObjectSelected = null;
+    public ItemDatabase ItemDatabase;
 
     private void Awake()
     {
@@ -59,17 +60,20 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         playerInventoryUI.SetActive(false);
+
     }
 
     private void Update()
     {
         if (isDisplay && !playerInventoryUI.activeSelf)
         {
+            Cursor.lockState = CursorLockMode.None;
             playerInventoryUI.SetActive(true);
             updateUI();
         }
         else if (!isDisplay && playerInventoryUI.activeSelf)
         {
+            Cursor.lockState = CursorLockMode.Locked;
             DesactivateUI();
             playerInventoryUI.SetActive(false);
         }
@@ -81,22 +85,22 @@ public class InventoryUI : MonoBehaviour
     public void updateUI()
     {
         DesactivateUI();
-        List<int> itemsId = new List<int>();
+        Dictionary<int, int> itemsId = new Dictionary<int, int>();
         List<string> itemsNameDisplayed = new List<string>();
 
-        for (int i = 0; i < allItem.Count; i++)
+        for (int i = 0; i < ItemDatabase.items.Count; i++)
         {
-            itemsId.Add(0);
+            itemsId.Add(ItemDatabase.items[i].name.GetHashCode(), 0);
         }
 
-        foreach (Item item in playerInventory.items)
+        foreach (ItemInventory item in playerInventory.items)
         {
             itemsId[item.id] += 1;
         }
 
         SortList();
 
-        foreach (Item item in playerInventory.items)
+        foreach (ItemInventory item in playerInventory.items)
         {
             if (!itemsNameDisplayed.Contains(item.name))
             {
@@ -149,10 +153,10 @@ public class InventoryUI : MonoBehaviour
 
                         switch (GetItemById(item.id).rarity)
                         {
-                            case Item.RARITY.LEGENDARY:
+                            case ItemInventory.RARITY.LEGENDARY:
                                 tempItemUI.GetComponentsInChildren<Image>()[0].color = new Color(255, 215, 0, 1);
                                 break;
-                            case Item.RARITY.RARE:
+                            case ItemInventory.RARITY.RARE:
                                 tempItemUI.GetComponentsInChildren<Image>()[0].color = new Color(146, 0, 255, 1);
                                 break;
                         }
@@ -168,10 +172,10 @@ public class InventoryUI : MonoBehaviour
 
                     switch (GetItemById(item.id).rarity)
                     {
-                        case Item.RARITY.LEGENDARY:
+                        case ItemInventory.RARITY.LEGENDARY:
                             tempItemUI.GetComponentsInChildren<Image>()[0].color = new Color(255, 215, 0, 1);
                             break;
-                        case Item.RARITY.RARE:
+                        case ItemInventory.RARITY.RARE:
                             tempItemUI.GetComponentsInChildren<Image>()[0].color = new Color(146, 0, 255, 1);
                             break;
                     }
@@ -185,10 +189,10 @@ public class InventoryUI : MonoBehaviour
 
                     switch (GetItemById(item.id).rarity)
                     {
-                        case Item.RARITY.LEGENDARY:
+                        case ItemInventory.RARITY.LEGENDARY:
                             tempItemUI.GetComponentsInChildren<Image>()[0].color = new Color(255, 215, 0, 1);
                             break;
-                        case Item.RARITY.RARE:
+                        case ItemInventory.RARITY.RARE:
                             tempItemUI.GetComponentsInChildren<Image>()[0].color = new Color(146, 0, 255, 1);
                             break;
                     }
@@ -205,7 +209,6 @@ public class InventoryUI : MonoBehaviour
 
     private void DesactivateUI()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         foreach (Transform child in contentUI.transform)
         {
             Destroy(child.gameObject);
@@ -229,12 +232,12 @@ public class InventoryUI : MonoBehaviour
 
     }
 
-    private Item GetItemById(int id)
+    private ItemInventory GetItemById(int id)
     {
-        return allItem.Find(x => x.id == id);
+        return ItemDatabase.items.Find(x => x.id == id);
     }
 
-    public void SortByID(List<Item> itemList)
+    public void SortByID(List<ItemInventory> itemList)
     {
         int n = itemList.Count;
         for (int i = 0; i < n - 1; i++)
@@ -247,7 +250,7 @@ public class InventoryUI : MonoBehaviour
                     minIndex = j;
                 }
             }
-            Item temp = itemList[i];
+            ItemInventory temp = itemList[i];
             itemList[i] = itemList[minIndex];
             itemList[minIndex] = temp;
         }
@@ -255,9 +258,9 @@ public class InventoryUI : MonoBehaviour
 
     public void SortByType()
     {
-        List<Item> itemListSorted = new List<Item>();
-        List<Item> itemTrash = new List<Item>();
-        foreach (Item item in playerInventory.items)
+        List<ItemInventory> itemListSorted = new List<ItemInventory>();
+        List<ItemInventory> itemTrash = new List<ItemInventory>();
+        foreach (ItemInventory item in playerInventory.items)
         {
             if (!itemListSorted.Contains(item))
             {
@@ -317,12 +320,12 @@ public class InventoryUI : MonoBehaviour
                     minIndex = j;
                 }
             }
-            Item temp = itemListSorted[i];
+            ItemInventory temp = itemListSorted[i];
             itemListSorted[i] = itemListSorted[minIndex];
             itemListSorted[minIndex] = temp;
         }
 
-        foreach (Item item in itemTrash)
+        foreach (ItemInventory item in itemTrash)
         {
             itemListSorted.Add(item);
         }
@@ -332,9 +335,9 @@ public class InventoryUI : MonoBehaviour
 
     public void SortByRarity()
     {
-        List<Item> itemListSorted = new List<Item>();
-        List<Item> itemTrash = new List<Item>();
-        foreach (Item item in playerInventory.items)
+        List<ItemInventory> itemListSorted = new List<ItemInventory>();
+        List<ItemInventory> itemTrash = new List<ItemInventory>();
+        foreach (ItemInventory item in playerInventory.items)
         {
             if (!itemListSorted.Contains(item))
             {
@@ -394,7 +397,7 @@ public class InventoryUI : MonoBehaviour
                     minIndex = j;
                 }
             }
-            Item temp = itemListSorted[i];
+            ItemInventory temp = itemListSorted[i];
             itemListSorted[i] = itemListSorted[minIndex];
             itemListSorted[minIndex] = temp;
         }
@@ -409,12 +412,12 @@ public class InventoryUI : MonoBehaviour
                     minIndex = j;
                 }
             }
-            Item temp = itemListSorted[i];
+            ItemInventory temp = itemListSorted[i];
             itemListSorted[i] = itemListSorted[minIndex];
             itemListSorted[minIndex] = temp;
         }
 
-        foreach (Item item in itemTrash)
+        foreach (ItemInventory item in itemTrash)
         {
             itemListSorted.Add(item);
         }

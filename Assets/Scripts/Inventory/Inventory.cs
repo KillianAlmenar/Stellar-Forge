@@ -5,11 +5,11 @@ using UnityEngine.Experimental.Rendering;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> items;
+    public List<ItemInventory> items;
 
-    public Item selectedItem;
+    public ItemInventory selectedItem;
 
-    public void DeleteItem(Item _item, int _amount)
+    public void DeleteItem(ItemInventory _item, int _amount)
     {
         for (int i = 0; i < _amount; i++)
         {
@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(Item _item, int _amount)
+    public void AddItem(ItemInventory _item, int _amount)
     {
         for (int i = 0; i < _amount; i++)
         {
@@ -25,12 +25,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public int GetNumberOfItem(Item _item)
+    public int GetNumberOfItem(ItemInventory _item)
     {
         if(items.Contains(_item))
         {
             int quantity = 0;
-            foreach (Item item in items)
+            foreach (ItemInventory item in items)
             {
                 if(item == _item)
                 {
