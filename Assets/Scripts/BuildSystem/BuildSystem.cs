@@ -5,32 +5,41 @@ using UnityEngine;
 public class BuildSystem : MonoBehaviour
 {
     [SerializeField] private GameObject cameraHead;
-    [SerializeField] private GameObject obj;
     [SerializeField] private float distance;
     [SerializeField] private float buildDistance = 5;
     [SerializeField] private Material hologramMat;
-    [SerializeField] private bool isBuilding = false;
+    [SerializeField] public bool isBuilding = false;
+    [SerializeField] public bool asInitBuildable = false;
+    public GameObject selectedBuildable;
+    public GameObject buildHolo;
 
-
-    private void Awake()
-    {
-        if (obj != null)
-        {
-            foreach (Renderer rend in obj.GetComponentsInChildren<Renderer>())
-            {
-                rend.material = hologramMat;
-            }
-
-            foreach (Collider collide in obj.GetComponentsInChildren<Collider>())
-            {
-                collide.enabled = false;
-            }
-        }
-    }
 
     private void Update()
     {
-        DetectModuleSlot();
+        if(isBuilding)
+        {
+            if (!asInitBuildable)
+            {
+                buildHolo = Instantiate(selectedBuildable);
+                foreach (Renderer rend in buildHolo.GetComponentsInChildren<Renderer>())
+                {
+                    rend.material = hologramMat;
+                }
+
+                foreach (Collider collide in buildHolo.GetComponentsInChildren<Collider>())
+                {
+                    collide.enabled = false;
+                }
+                asInitBuildable = true;
+            }
+            buildHolo.transform.position = getDistanceNearObject();
+        }
+        else
+        {
+
+        }
+
+       // DetectModuleSlot();
     }
 
     private void DetectModuleSlot()

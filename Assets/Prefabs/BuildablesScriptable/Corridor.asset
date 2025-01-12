@@ -16,3 +16,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: dcfd13997c1763d4a841333e22826027, type: 3}
   itemName: Corridor
   description: 
+  buildableObject: {fileID: 126730, guid: f18932879bb23b84ca5370b65419ee41, type: 3}

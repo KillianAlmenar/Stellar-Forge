@@ -10,6 +10,6 @@ public class Buildable : ScriptableObject
     public Sprite icon;
     public string itemName;
     public string description;
-
+    public GameObject buildableObject;
 
 }

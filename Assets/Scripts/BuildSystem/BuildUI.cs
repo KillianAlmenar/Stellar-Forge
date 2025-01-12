@@ -40,6 +40,8 @@ public class BuildUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             DesactivateUI();
             BuildMenu.SetActive(false);
+            GameManager.instance.gameInput.UI.Disable();
+            GameManager.instance.gameInput.Player.Enable();
         }
     }
 
@@ -52,19 +54,21 @@ public class BuildUI : MonoBehaviour
         {
             if (BuildableDatabase.buildables[i].isUnlocked)
             {
-
                 totalBuildableUnlocked++;
             }
         }
 
         List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenu.transform.position, MenuRadius, totalBuildableUnlocked, Utility.Axis.XY);
 
-
-        for (int i = 0; i < totalBuildableUnlocked; i++)
+        for (int i = 0; i < BuildableDatabase.buildables.Count; i++)
         {
-            GameObject MenuFrame = Instantiate(BuildItemUI, BuildMenu.transform);
-            MenuFrame.transform.position = circlePosition[i];
-            MenuFrame.GetComponentsInChildren<Image>()[1].sprite = BuildableDatabase.buildables[i].icon;
+            if (BuildableDatabase.buildables[i].isUnlocked)
+            {
+                GameObject MenuFrame = Instantiate(BuildItemUI, BuildMenu.transform);
+                MenuFrame.transform.position = circlePosition[i];
+                MenuFrame.GetComponent<SelectBuildable>().buildable = BuildableDatabase.buildables[i];
+                MenuFrame.GetComponentsInChildren<Image>()[1].sprite = BuildableDatabase.buildables[i].icon;
+            }
         }
 
     }
