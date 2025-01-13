@@ -5,7 +5,6 @@ using UnityEngine;
 public class BuildSystem : MonoBehaviour
 {
     [SerializeField] private GameObject cameraHead;
-    [SerializeField] private float distance;
     [SerializeField] private float buildDistance = 5;
     [SerializeField] private Material hologramMat;
     [SerializeField] public bool isBuilding = false;
@@ -32,14 +31,15 @@ public class BuildSystem : MonoBehaviour
                 }
                 asInitBuildable = true;
             }
+
             buildHolo.transform.position = getDistanceNearObject();
+            DetectModuleSlot();
         }
         else
         {
 
         }
 
-       // DetectModuleSlot();
     }
 
     private void DetectModuleSlot()
@@ -51,7 +51,7 @@ public class BuildSystem : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward, Color.yellow);
 
 
-        if (hit.transform != null && hit.transform.tag == "Module Slot")
+        if (hit.transform != null && hit.transform.CompareTag("Module Slot"))
         {
             Debug.Log(hit.transform.name);
         }
@@ -60,20 +60,30 @@ public class BuildSystem : MonoBehaviour
 
     Vector3 getDistanceNearObject()
     {
-        RaycastHit[] hit = Physics.RaycastAll(cameraHead.transform.position, cameraHead.transform.forward, distance);
+        RaycastHit[] hit = Physics.RaycastAll(cameraHead.transform.position, cameraHead.transform.forward, buildDistance);
         if (hit.Length > 0)
         {
-            if (hit[0].transform.tag == "Module Slot")
+            foreach(RaycastHit hit2 in hit)
             {
-
+                if(hit2.transform.CompareTag("Module Slot"))
+                {
+                    return hit2.transform.position;
+                }
             }
+
             return hit[0].point;
         }
         else
         {
-            return cameraHead.transform.position + cameraHead.transform.forward * distance;
+            return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
         }
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, getDistanceNearObject());
     }
 
 }
