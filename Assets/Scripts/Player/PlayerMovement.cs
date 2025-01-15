@@ -18,11 +18,13 @@ public class PlayerMovement : Movement
     private Vector3 targetRotationVec = Vector3.zero;
     private Vector3 targetCamVec = Vector3.zero;
     [SerializeField] private float rotationDamping = 10f;
+    private BuildSystem buildSystem;
 
     private void Start()
     {
         moveScript = GetComponent<MovableObj>();
         physicsScript = GetComponent<PlayerPhysics>();
+        buildSystem = GetComponent<BuildSystem>();
     }
 
     private void OnEnable()
@@ -140,7 +142,7 @@ public class PlayerMovement : Movement
 
     private void OnJumpPerformed(InputAction.CallbackContext ctx)
     {
-        if (physicsScript.onPlanet && !physicsScript.onStation)
+        if (physicsScript.onPlanet && !physicsScript.onStation && !buildSystem.isBuilding)
         {
             jumpBtn = true;
         }

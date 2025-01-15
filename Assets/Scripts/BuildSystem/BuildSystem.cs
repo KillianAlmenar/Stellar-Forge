@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class BuildSystem : MonoBehaviour
 {
@@ -11,11 +13,22 @@ public class BuildSystem : MonoBehaviour
     [SerializeField] public bool asInitBuildable = false;
     public GameObject selectedBuildable;
     public GameObject buildHolo;
+    private Color HoloColor = Color.red;
+    private ModuleSlot slot;
 
+    private void OnEnable()
+    {
+        GameManager.instance.gameInput.Player.Build.performed += OnBuildPressed;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.gameInput.Player.Build.performed -= OnBuildPressed;
+    }
 
     private void Update()
     {
-        if(isBuilding)
+        if (isBuilding)
         {
             if (!asInitBuildable)
             {
@@ -23,6 +36,7 @@ public class BuildSystem : MonoBehaviour
                 foreach (Renderer rend in buildHolo.GetComponentsInChildren<Renderer>())
                 {
                     rend.material = hologramMat;
+                    rend.material.SetColor("_FresnelColor", Color.red);
                 }
 
                 foreach (Collider collide in buildHolo.GetComponentsInChildren<Collider>())
@@ -48,12 +62,12 @@ public class BuildSystem : MonoBehaviour
 
         Physics.Raycast(transform.position, transform.forward, out hit);
 
-        Debug.DrawRay(transform.position, transform.forward, Color.yellow);
-
-
         if (hit.transform != null && hit.transform.CompareTag("Module Slot"))
         {
-            Debug.Log(hit.transform.name);
+            if(slot != hit.transform.GetComponent<ModuleSlot>())
+            {
+                slot = hit.transform.GetComponent<ModuleSlot>();
+            }
         }
 
     }
@@ -63,27 +77,54 @@ public class BuildSystem : MonoBehaviour
         RaycastHit[] hit = Physics.RaycastAll(cameraHead.transform.position, cameraHead.transform.forward, buildDistance);
         if (hit.Length > 0)
         {
-            foreach(RaycastHit hit2 in hit)
+            foreach (RaycastHit hit2 in hit)
             {
-                if(hit2.transform.CompareTag("Module Slot"))
+                if (hit2.transform.CompareTag("Module Slot"))
                 {
+                    SwapHoloColor(Color.blue);
+
                     return hit2.transform.position;
                 }
             }
 
+            SwapHoloColor(Color.red);
             return hit[0].point;
         }
         else
         {
+            SwapHoloColor(Color.red);
+
             return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
         }
 
     }
 
-    private void OnDrawGizmos()
+    private void SwapHoloColor(Color newColor)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, getDistanceNearObject());
+        if (HoloColor != newColor)
+        {
+            foreach (Renderer rend in buildHolo.GetComponentsInChildren<Renderer>())
+            {
+                rend.material = hologramMat;
+                rend.material.SetColor("_FresnelColor", newColor);
+            }
+            HoloColor = newColor;
+        }
+    }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawLine(transform.position, getDistanceNearObject());
+    //}
+
+    private void OnBuildPressed(InputAction.CallbackContext ctx)
+    {
+        if (isBuilding)
+        {
+            slot.PlaceBuildable(selectedBuildable);
+        }
+        Debug.Log("aaa");
     }
 
 }
