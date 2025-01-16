@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildables:
   - {fileID: 11400000, guid: 640480c66a0338d4e87daa40bbe6f781, type: 2}
+  - {fileID: 11400000, guid: fc6a9dd13ad8be84aa93d0466eeace26, type: 2}

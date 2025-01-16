@@ -98,6 +98,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateBuild"",
+                    ""type"": ""Value"",
+                    ""id"": ""bff84dcc-4b49-437e-9aa0-71a404fad5c0"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -406,6 +415,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Build"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f4ec66e-8180-4b2c-8372-bb080bdd818e"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""RotateBuild"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -748,6 +768,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_BuildMenu = m_Player.FindAction("BuildMenu", throwIfNotFound: true);
         m_Player_Build = m_Player.FindAction("Build", throwIfNotFound: true);
+        m_Player_RotateBuild = m_Player.FindAction("RotateBuild", throwIfNotFound: true);
         // Spaceship
         m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
         m_Spaceship_Move = m_Spaceship.FindAction("Move", throwIfNotFound: true);
@@ -827,6 +848,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_BuildMenu;
     private readonly InputAction m_Player_Build;
+    private readonly InputAction m_Player_RotateBuild;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
@@ -839,6 +861,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @BuildMenu => m_Wrapper.m_Player_BuildMenu;
         public InputAction @Build => m_Wrapper.m_Player_Build;
+        public InputAction @RotateBuild => m_Wrapper.m_Player_RotateBuild;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -872,6 +895,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Build.started += instance.OnBuild;
             @Build.performed += instance.OnBuild;
             @Build.canceled += instance.OnBuild;
+            @RotateBuild.started += instance.OnRotateBuild;
+            @RotateBuild.performed += instance.OnRotateBuild;
+            @RotateBuild.canceled += instance.OnRotateBuild;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -900,6 +926,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Build.started -= instance.OnBuild;
             @Build.performed -= instance.OnBuild;
             @Build.canceled -= instance.OnBuild;
+            @RotateBuild.started -= instance.OnRotateBuild;
+            @RotateBuild.performed -= instance.OnRotateBuild;
+            @RotateBuild.canceled -= instance.OnRotateBuild;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1069,6 +1098,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnBuildMenu(InputAction.CallbackContext context);
         void OnBuild(InputAction.CallbackContext context);
+        void OnRotateBuild(InputAction.CallbackContext context);
     }
     public interface ISpaceshipActions
     {

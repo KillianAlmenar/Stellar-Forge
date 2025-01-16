@@ -14,16 +14,19 @@ public class BuildSystem : MonoBehaviour
     public GameObject selectedBuildable;
     public GameObject buildHolo;
     private Color HoloColor = Color.red;
-    private ModuleSlot slot;
+    [SerializeField] private ModuleSlot slot;
+    private float currentHoloRotation = 0;
 
     private void OnEnable()
     {
         GameManager.instance.gameInput.Player.Build.performed += OnBuildPressed;
+        GameManager.instance.gameInput.Player.RotateBuild.performed += RotateBuildPressed;
     }
 
     private void OnDisable()
     {
         GameManager.instance.gameInput.Player.Build.performed -= OnBuildPressed;
+        GameManager.instance.gameInput.Player.RotateBuild.performed -= RotateBuildPressed;
     }
 
     private void Update()
@@ -33,6 +36,7 @@ public class BuildSystem : MonoBehaviour
             if (!asInitBuildable)
             {
                 buildHolo = Instantiate(selectedBuildable);
+                buildHolo.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 foreach (Renderer rend in buildHolo.GetComponentsInChildren<Renderer>())
                 {
                     rend.material = hologramMat;
@@ -49,11 +53,6 @@ public class BuildSystem : MonoBehaviour
             buildHolo.transform.position = getDistanceNearObject();
             DetectModuleSlot();
         }
-        else
-        {
-
-        }
-
     }
 
     private void DetectModuleSlot()
@@ -64,10 +63,14 @@ public class BuildSystem : MonoBehaviour
 
         if (hit.transform != null && hit.transform.CompareTag("Module Slot"))
         {
-            if(slot != hit.transform.GetComponent<ModuleSlot>())
+            if (slot != hit.transform.GetComponent<ModuleSlot>())
             {
                 slot = hit.transform.GetComponent<ModuleSlot>();
             }
+        }
+        else if (slot != null)
+        {
+            slot = null;
         }
 
     }
@@ -75,17 +78,18 @@ public class BuildSystem : MonoBehaviour
     Vector3 getDistanceNearObject()
     {
         RaycastHit[] hit = Physics.RaycastAll(cameraHead.transform.position, cameraHead.transform.forward, buildDistance);
+
+        if (slot != null)
+        {
+            SwapHoloColor(Color.blue);
+
+            return slot.GetNearestPoint(buildHolo.transform.position);
+        }
+
+
         if (hit.Length > 0)
         {
-            foreach (RaycastHit hit2 in hit)
-            {
-                if (hit2.transform.CompareTag("Module Slot"))
-                {
-                    SwapHoloColor(Color.blue);
-
-                    return hit2.transform.position;
-                }
-            }
+   
 
             SwapHoloColor(Color.red);
             return hit[0].point;
@@ -96,7 +100,6 @@ public class BuildSystem : MonoBehaviour
 
             return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
         }
-
     }
 
     private void SwapHoloColor(Color newColor)
@@ -112,19 +115,24 @@ public class BuildSystem : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawLine(transform.position, getDistanceNearObject());
-    //}
-
     private void OnBuildPressed(InputAction.CallbackContext ctx)
     {
         if (isBuilding)
         {
-            slot.PlaceBuildable(selectedBuildable);
+            slot.PlaceBuildable(selectedBuildable, currentHoloRotation, buildHolo.transform.position);
+            isBuilding = false;
+            Destroy(buildHolo); 
         }
-        Debug.Log("aaa");
+    }
+
+   private void RotateBuildPressed(InputAction.CallbackContext ctx)
+    {
+        if (isBuilding)
+        {
+            currentHoloRotation += 90;
+            buildHolo.transform.localEulerAngles = new Vector3(0,currentHoloRotation % 360, 0);
+        }
+
     }
 
 }

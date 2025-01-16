@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static InventoryUI;
-using static UnityEditor.Progress;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BuildUI : MonoBehaviour
