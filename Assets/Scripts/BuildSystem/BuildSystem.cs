@@ -82,15 +82,24 @@ public class BuildSystem : MonoBehaviour
         if (slot != null)
         {
             SwapHoloColor(Color.blue);
+            Vector3 slotNearPoint = slot.GetNearestPoint(buildHolo.transform.position);
+            Debug.Log($"slotNearPoint : {slotNearPoint}");
 
-            return slot.GetNearestPoint(buildHolo.transform.position);
+
+            Vector3 buildNearPoint = buildHolo.GetComponent<ModuleSlot>().GetNearestPoint(slotNearPoint);
+            Debug.Log($"buildNearPoint : {buildNearPoint}");
+
+            Vector3 finalPoint = slotNearPoint + (buildHolo.transform.position - buildNearPoint);
+            finalPoint.y = slotNearPoint.y;
+            Debug.Log($"finalPoint : {finalPoint}");
+
+
+            return finalPoint;
         }
 
 
         if (hit.Length > 0)
         {
-   
-
             SwapHoloColor(Color.red);
             return hit[0].point;
         }
@@ -117,9 +126,9 @@ public class BuildSystem : MonoBehaviour
 
     private void OnBuildPressed(InputAction.CallbackContext ctx)
     {
-        if (isBuilding)
+        if (isBuilding && slot != null)
         {
-            slot.PlaceBuildable(selectedBuildable, currentHoloRotation, buildHolo.transform.position);
+            slot.PlaceBuildable(selectedBuildable, currentHoloRotation);
             isBuilding = false;
             Destroy(buildHolo); 
         }

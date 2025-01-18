@@ -21,7 +21,7 @@ public class ModuleSlot : MonoBehaviour
         station = GameObject.Find("Station");
     }
 
-    public void PlaceBuildable(GameObject obj, float _rotation, Vector3 _position)
+    public void PlaceBuildable(GameObject obj, float _rotation)
     {
         switch (type)
         {
@@ -47,6 +47,18 @@ public class ModuleSlot : MonoBehaviour
                         nearestPoint = t.position;
                     }
                 }
+
+                foreach (Transform t in transforms)
+                {
+
+                    if (t.position == nearestPoint)
+                    {
+                        Debug.Log($"name of anchor : {t.name}");
+                    }
+
+                }
+
+
                 return nearestPoint;
             case TYPE.DESTROYABLE:
                 return transforms[0].position;
