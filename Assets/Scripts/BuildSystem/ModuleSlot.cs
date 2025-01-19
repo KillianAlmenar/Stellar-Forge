@@ -7,7 +7,7 @@ public class ModuleSlot : MonoBehaviour
 {
     [SerializeField] List<Transform> transforms = new List<Transform>();
     [SerializeField] GameObject station;
-    Vector3 nearestPoint = Vector3.zero;
+    Vector3 nearestPoint = Vector3.positiveInfinity;
 
     public enum TYPE
     {
@@ -21,15 +21,15 @@ public class ModuleSlot : MonoBehaviour
         station = GameObject.Find("Station");
     }
 
-    public void PlaceBuildable(GameObject obj, float _rotation)
+    public void PlaceBuildable(GameObject obj, float _rotation, Vector3 _pos)
     {
         switch (type)
         {
             case TYPE.CORRIDOR:
-                Instantiate(obj, nearestPoint, Quaternion.Euler(0, _rotation, 0), station.transform);
+                Instantiate(obj, _pos, Quaternion.Euler(0, _rotation, 0), station.transform);
                 break;
             case TYPE.DESTROYABLE:
-                Instantiate(obj, transforms[0].position, Quaternion.Euler(0, _rotation,0), station.transform);
+                Instantiate(obj, _pos, Quaternion.Euler(0, _rotation,0), station.transform);
                 Destroy(gameObject);
                 break;
         }
@@ -37,27 +37,22 @@ public class ModuleSlot : MonoBehaviour
 
     public Vector3 GetNearestPoint(Vector3 point)
     {
+        nearestPoint = Vector3.positiveInfinity;
+        float minDistance = float.MaxValue;
+
         switch (type)
         {
             case TYPE.CORRIDOR:
+
                 foreach (Transform t in transforms)
                 {
-                    if((t.position - point).magnitude < (nearestPoint - point).magnitude)
+                    float distance = (t.position - point).sqrMagnitude;
+                    if (distance < minDistance)
                     {
+                        minDistance = distance;
                         nearestPoint = t.position;
                     }
                 }
-
-                foreach (Transform t in transforms)
-                {
-
-                    if (t.position == nearestPoint)
-                    {
-                        Debug.Log($"name of anchor : {t.name}");
-                    }
-
-                }
-
 
                 return nearestPoint;
             case TYPE.DESTROYABLE:

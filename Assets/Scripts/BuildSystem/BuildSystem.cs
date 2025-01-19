@@ -16,6 +16,7 @@ public class BuildSystem : MonoBehaviour
     private Color HoloColor = Color.red;
     [SerializeField] private ModuleSlot slot;
     private float currentHoloRotation = 0;
+    private Vector3 placePos = Vector3.zero;
 
     private void OnEnable()
     {
@@ -83,20 +84,11 @@ public class BuildSystem : MonoBehaviour
         {
             SwapHoloColor(Color.blue);
             Vector3 slotNearPoint = slot.GetNearestPoint(buildHolo.transform.position);
-            Debug.Log($"slotNearPoint : {slotNearPoint}");
-
 
             Vector3 buildNearPoint = buildHolo.GetComponent<ModuleSlot>().GetNearestPoint(slotNearPoint);
-            Debug.Log($"buildNearPoint : {buildNearPoint}");
 
-            Vector3 finalPoint = slotNearPoint + (buildHolo.transform.position - buildNearPoint);
-            finalPoint.y = slotNearPoint.y;
-            Debug.Log($"finalPoint : {finalPoint}");
-
-
-            return finalPoint;
+            return slotNearPoint + (buildHolo.transform.position - buildNearPoint);
         }
-
 
         if (hit.Length > 0)
         {
@@ -106,7 +98,6 @@ public class BuildSystem : MonoBehaviour
         else
         {
             SwapHoloColor(Color.red);
-
             return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
         }
     }
@@ -128,18 +119,18 @@ public class BuildSystem : MonoBehaviour
     {
         if (isBuilding && slot != null)
         {
-            slot.PlaceBuildable(selectedBuildable, currentHoloRotation);
+            slot.PlaceBuildable(selectedBuildable, currentHoloRotation, buildHolo.transform.position);
             isBuilding = false;
-            Destroy(buildHolo); 
+            Destroy(buildHolo);
         }
     }
 
-   private void RotateBuildPressed(InputAction.CallbackContext ctx)
+    private void RotateBuildPressed(InputAction.CallbackContext ctx)
     {
         if (isBuilding)
         {
-            currentHoloRotation += 90;
-            buildHolo.transform.localEulerAngles = new Vector3(0,currentHoloRotation % 360, 0);
+            currentHoloRotation += 90 * (ctx.ReadValue<float>() / 120);
+            buildHolo.transform.localEulerAngles = new Vector3(0, currentHoloRotation % 360, 0);
         }
 
     }
