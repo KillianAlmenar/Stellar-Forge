@@ -17,6 +17,7 @@ public class SelectBuildable : MonoBehaviour
         buildSystem.selectedBuildable = buildable.buildableObject;
         buildSystem.isBuilding = true;
         buildSystem.asInitBuildable = false;
+        buildSystem.ResetBuildable();
         GameManager.instance.transform.GetComponent<BuildUI>().isDisplay = false;
     }
 

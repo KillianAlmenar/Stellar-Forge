@@ -15,9 +15,8 @@ public class BuildSystem : MonoBehaviour
     public GameObject buildHolo;
     private Color HoloColor = Color.red;
     [SerializeField] private ModuleSlot slot;
-    private float currentHoloRotation = 0;
+    private int currentHoloRotation = 0;
     private Vector3 placePos = Vector3.zero;
-
     private void OnEnable()
     {
         GameManager.instance.gameInput.Player.Build.performed += OnBuildPressed;
@@ -83,11 +82,17 @@ public class BuildSystem : MonoBehaviour
         if (slot != null)
         {
             SwapHoloColor(Color.blue);
-            Vector3 slotNearPoint = slot.GetNearestPoint(buildHolo.transform.position);
 
-            Vector3 buildNearPoint = buildHolo.GetComponent<ModuleSlot>().GetNearestPoint(slotNearPoint);
+            Transform slotAnchor = slot.GetNearestPoint(buildHolo.transform.position);
 
-            return slotNearPoint + (buildHolo.transform.position - buildNearPoint);
+            if (slotAnchor != null)
+            {
+                Transform myAnchor = buildHolo.GetComponent<ModuleSlot>().GetNearestPoint(slotAnchor.position);
+
+                SetRotationToAnchor(myAnchor, slotAnchor);
+
+                return slotAnchor.position + (buildHolo.transform.position - myAnchor.position);
+            }
         }
 
         if (hit.Length > 0)
@@ -100,6 +105,18 @@ public class BuildSystem : MonoBehaviour
             SwapHoloColor(Color.red);
             return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
         }
+    }
+
+    private void SetRotationToAnchor(Transform _myTransform, Transform otherAnchor)
+    {
+        Vector3 myForward = _myTransform.forward;
+        Vector3 targetDirection = -otherAnchor.forward;
+
+        float targetAngle = Vector3.SignedAngle(myForward, targetDirection, Vector3.up);
+
+        currentHoloRotation += Mathf.RoundToInt(targetAngle);
+
+        buildHolo.transform.localEulerAngles = new Vector3(0, currentHoloRotation % 360, 0);
     }
 
     private void SwapHoloColor(Color newColor)
@@ -129,10 +146,17 @@ public class BuildSystem : MonoBehaviour
     {
         if (isBuilding)
         {
-            currentHoloRotation += 90 * (ctx.ReadValue<float>() / 120);
+            currentHoloRotation += (int)(90 * (ctx.ReadValue<float>() / 120));
             buildHolo.transform.localEulerAngles = new Vector3(0, currentHoloRotation % 360, 0);
         }
+    }
 
+    public void ResetBuildable()
+    {
+        if(buildHolo)
+        {
+            Destroy(buildHolo);
+        }
     }
 
 }
