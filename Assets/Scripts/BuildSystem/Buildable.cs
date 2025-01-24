@@ -11,5 +11,5 @@ public class Buildable : ScriptableObject
     public string itemName;
     public string description;
     public GameObject buildableObject;
-
+    public List<ItemInventory> ressources;
 }
