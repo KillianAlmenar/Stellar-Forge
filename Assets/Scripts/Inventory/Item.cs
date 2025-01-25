@@ -9,7 +9,8 @@ public class ItemInventory : ScriptableObject
         KEYITEM,
         CONSOMMABLE,
         WEAPON,
-        ARMOR
+        ARMOR,
+        RESSOURCE
     }
     public TYPE type;
 
