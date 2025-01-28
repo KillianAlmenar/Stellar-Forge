@@ -75,4 +75,12 @@ public class ModuleSlot : MonoBehaviour
         transformsTaken.Add(_pos);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Y'a l'joueur là !");
+        }
+    }
+
 }

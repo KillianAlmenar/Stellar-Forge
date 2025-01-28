@@ -37,5 +37,12 @@ public class InvCategory : MonoBehaviour
 
     }
 
+    public void RessourcePressed()
+    {
+        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.RESSOURCE;
+        InventoryUI.instance.updateUI();
+
+    }
+
 
 }

@@ -10,7 +10,7 @@ public class BuildSystem : MonoBehaviour
     [SerializeField] private float buildDistance = 5;
     [SerializeField] private Material hologramMat;
     [SerializeField] public bool isBuilding = false;
-    [SerializeField] public bool asInitBuildable = false;
+    public bool asInitBuildable = false;
     public GameObject selectedBuildable;
     public GameObject buildHolo;
     private Color HoloColor = Color.red;
@@ -37,6 +37,7 @@ public class BuildSystem : MonoBehaviour
             {
                 buildHolo = Instantiate(selectedBuildable);
                 buildHolo.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                HoloColor = Color.red;
                 foreach (Renderer rend in buildHolo.GetComponentsInChildren<Renderer>())
                 {
                     rend.material = hologramMat;

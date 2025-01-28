@@ -16,6 +16,6 @@ MonoBehaviour:
   rarity: 2
   itemName: Iron Ingot
   description: Basically some Iron
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 385d2f881369bbc45aad14c5a4ca9993, type: 3}
   stackSize: 64
   id: 1400949664

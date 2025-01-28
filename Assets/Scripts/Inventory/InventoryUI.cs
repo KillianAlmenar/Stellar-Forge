@@ -19,7 +19,7 @@ public class InventoryUI : MonoBehaviour
     public ItemInventory selectedItem;
     public GameObject interaction;
     static public InventoryUI instance = null;
-    private List<bool> sortingTypeBool = new List<bool> { false, false, false, false };
+    private List<bool> sortingTypeBool = new List<bool> { false, false, false, false, false };
     public GameObject buttonPressed = null;
     private GameObject previousObjectSelected = null;
     public ItemDatabase ItemDatabase;
@@ -51,7 +51,8 @@ public class InventoryUI : MonoBehaviour
         KEYITEM,
         CONSOMMABLE,
         WEAPON,
-        ARMOR
+        ARMOR,
+        RESSOURCE
 
     }
 
@@ -132,9 +133,15 @@ public class InventoryUI : MonoBehaviour
                             sortingTypeBool[3] = true;
                         }
                         break;
+                    case SORTINGTYPE.RESSOURCE:
+                        if (item is Ressources)
+                        {
+                            sortingTypeBool[4] = true;
+                        }
+                        break;
                 }
 
-                if (itemsId[item.id] > 0 && GetItemById(item.id).stackSize == 1 && (sortingType == SORTINGTYPE.ALL || sortingTypeBool[0] || sortingTypeBool[1] || sortingTypeBool[2] || sortingTypeBool[3]))
+                if (itemsId[item.id] > 0 && GetItemById(item.id).stackSize == 1 && (sortingType == SORTINGTYPE.ALL || sortingTypeBool[0] || sortingTypeBool[1] || sortingTypeBool[2] || sortingTypeBool[3] || sortingTypeBool[4]))
                 {
                     for (int j = 0; j < itemsId[item.id]; j++)
                     {
@@ -163,7 +170,7 @@ public class InventoryUI : MonoBehaviour
 
                     }
                 }
-                else if (itemsId[item.id] == 1 && (sortingType == SORTINGTYPE.ALL || sortingTypeBool[0] || sortingTypeBool[1] || sortingTypeBool[2] || sortingTypeBool[3]))
+                else if (itemsId[item.id] == 1 && (sortingType == SORTINGTYPE.ALL || sortingTypeBool[0] || sortingTypeBool[1] || sortingTypeBool[2] || sortingTypeBool[3] || sortingTypeBool[4]))
                 {
                     GameObject tempItemUI = Instantiate(itemUI, contentUI.transform);
                     tempItemUI.GetComponentInChildren<TextMeshProUGUI>().text = " ";
@@ -180,7 +187,7 @@ public class InventoryUI : MonoBehaviour
                             break;
                     }
                 }
-                else if (itemsId[item.id] > 0 && (sortingType == SORTINGTYPE.ALL || sortingTypeBool[0] || sortingTypeBool[1] || sortingTypeBool[2] || sortingTypeBool[3]))
+                else if (itemsId[item.id] > 0 && (sortingType == SORTINGTYPE.ALL || sortingTypeBool[0] || sortingTypeBool[1] || sortingTypeBool[2] || sortingTypeBool[3] || sortingTypeBool[4]))
                 {
                     GameObject tempItemUI = Instantiate(itemUI, contentUI.transform);
                     tempItemUI.GetComponentInChildren<TextMeshProUGUI>().text = itemsId[item.id].ToString();
@@ -198,7 +205,7 @@ public class InventoryUI : MonoBehaviour
                     }
                 }
 
-                for(int i =0; i < 4; i++)
+                for(int i =0; i < 5; i++)
                 {
                     sortingTypeBool[i] = false;
                 }

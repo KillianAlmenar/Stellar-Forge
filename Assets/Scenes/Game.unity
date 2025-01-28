@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1723705971}
-  m_IndirectSpecularColor: {r: 0.016090982, g: 0.01466979, b: 0.013826404, a: 1}
+  m_IndirectSpecularColor: {r: 0.32680222, g: 0.33326456, b: 0.3136305, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3035,7 +3035,7 @@ PrefabInstance:
       objectReference: {fileID: 1723705966}
     - target: {fileID: 8027681537559173614, guid: 6144e5e5a1bf40d4dabc148cd26cc168, type: 3}
       propertyPath: Line
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8027681537559173614, guid: 6144e5e5a1bf40d4dabc148cd26cc168, type: 3}
       propertyPath: Player
@@ -3355,6 +3355,10 @@ PrefabInstance:
     - target: {fileID: 1290965951385213374, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
       propertyPath: m_Name
       value: Station
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290965951385213374, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1794235627506096830, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
       propertyPath: m_Convex
