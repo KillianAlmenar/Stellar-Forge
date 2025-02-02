@@ -55,7 +55,7 @@ public class BuildUI : MonoBehaviour
             }
         }
 
-        List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenu.transform.position, MenuRadius, totalBuildableUnlocked, Utility.Axis.XY);
+        List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenu.transform.position, Screen.height / 4, totalBuildableUnlocked, Utility.Axis.XY);
 
         for (int i = 0; i < BuildableDatabase.buildables.Count; i++)
         {

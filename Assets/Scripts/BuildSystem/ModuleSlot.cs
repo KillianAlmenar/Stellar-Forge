@@ -30,7 +30,9 @@ public class ModuleSlot : MonoBehaviour
         switch (type)
         {
             case TYPE.CORRIDOR:
-                transforms.Remove(GetNearestPoint(_pos));
+                Transform anchorToDestroy = GetNearestPoint(_pos);
+                anchorToDestroy.gameObject.SetActive(false);
+                transforms.Remove(anchorToDestroy);
                // AddTransformTaken(GetNearestPoint(_pos));
                 break;
             case TYPE.DESTROYABLE:
