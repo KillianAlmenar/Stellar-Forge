@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemIDManager : MonoBehaviour
 {
-    public static ItemIDManager Instance = new ItemIDManager();
+    public static ItemIDManager Instance;
     public int currentID = 0;
 
     private void Awake()

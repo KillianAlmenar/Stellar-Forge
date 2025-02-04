@@ -274,7 +274,7 @@ public class InventoryUI : MonoBehaviour
                 if (itemListSorted.Count > 0)
                 {
 
-                    for (int i = 0; i < itemListSorted.Count; i++)
+                    for (int i = 0; i < itemListSorted.Count;)
                     {
 
                         if (item.type < itemListSorted[i].type)
@@ -351,7 +351,7 @@ public class InventoryUI : MonoBehaviour
                 if (itemListSorted.Count > 0)
                 {
 
-                    for (int i = 0; i < itemListSorted.Count; i++)
+                    for (int i = 0; i < itemListSorted.Count;)
                     {
 
                         if (item.rarity < itemListSorted[i].rarity)

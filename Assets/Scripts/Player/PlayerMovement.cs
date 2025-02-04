@@ -17,7 +17,6 @@ public class PlayerMovement : Movement
 
     private Vector3 targetRotationVec = Vector3.zero;
     private Vector3 targetCamVec = Vector3.zero;
-    [SerializeField] private float rotationDamping = 10f;
     private BuildSystem buildSystem;
 
     private void Start()

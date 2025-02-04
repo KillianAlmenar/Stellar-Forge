@@ -7,7 +7,6 @@ public class DoorStation : MonoBehaviour
 {
     public GameObject LeftDoor;
     public GameObject RightDoor;
-    [SerializeField] private float radius = 1;
     float openTimer = 0;
     public bool DoorOpen = false;
 
