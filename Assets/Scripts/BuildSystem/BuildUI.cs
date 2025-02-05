@@ -9,7 +9,7 @@ using static UnityEditor.Progress;
 
 public class BuildUI : MonoBehaviour
 {
-    [SerializeField] GameObject BuildMenu;
+    [SerializeField] GameObject BuildMenuContent;
     [SerializeField] private BuildableDatabase BuildableDatabase;
     [SerializeField] public static BuildUI instance;
     [SerializeField] private GameObject BuildItemUI;
@@ -32,22 +32,25 @@ public class BuildUI : MonoBehaviour
     private void Update()
     {
         CheckSwitchState();
-        CheckCursorOnButton();
+        if (isDisplay)
+        {
+            CheckCursorOnButton();
+        }
     }
 
     private void CheckSwitchState()
     {
-        if (isDisplay && !BuildMenu.activeSelf)
+        if (isDisplay && !BuildMenuContent.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
-            BuildMenu.SetActive(true);
+            BuildMenuContent.SetActive(true);
             updateUI();
         }
-        else if (!isDisplay && BuildMenu.activeSelf)
+        else if (!isDisplay && BuildMenuContent.activeSelf)
         {
             Cursor.lockState = CursorLockMode.Locked;
             DesactivateUI();
-            BuildMenu.SetActive(false);
+            BuildMenuContent.SetActive(false);
             GameManager.instance.gameInput.UI.Disable();
             GameManager.instance.gameInput.Player.Enable();
         }
@@ -80,6 +83,7 @@ public class BuildUI : MonoBehaviour
         {
             DisableInformation();
         }
+        UpdateInfoPos();
 
     }
 
@@ -125,6 +129,22 @@ public class BuildUI : MonoBehaviour
         }
     }
 
+    void UpdateInfoPos()
+    {
+        if (InformationObj.activeSelf)
+        {
+            RectTransform rectTransform = InformationObj.GetComponent<RectTransform>();
+            RectTransform canvasRect = InformationObj.transform.root.GetComponent<RectTransform>();
+
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, Input.mousePosition, null, out localPoint);
+
+            rectTransform.anchoredPosition = localPoint + new Vector2(rectTransform.rect.width / 2, -rectTransform.rect.height / 2);
+        }
+    }
+
+
+
     public int GetNumberOfItem(Buildable buildable, ItemInventory _item)
     {
         if (buildable.ressources.Contains(_item))
@@ -157,13 +177,13 @@ public class BuildUI : MonoBehaviour
             }
         }
 
-        List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenu.transform.position, Screen.height / 4, totalBuildableUnlocked, Utility.Axis.XY);
+        List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenuContent.transform.position, Screen.height / 4, totalBuildableUnlocked, Utility.Axis.XY);
 
         for (int i = 0; i < BuildableDatabase.buildables.Count; i++)
         {
             if (BuildableDatabase.buildables[i].isUnlocked)
             {
-                GameObject MenuFrame = Instantiate(BuildItemUI, BuildMenu.transform);
+                GameObject MenuFrame = Instantiate(BuildItemUI, BuildMenuContent.transform);
                 MenuFrame.transform.position = circlePosition[i];
                 MenuFrame.GetComponent<SelectBuildable>().buildable = BuildableDatabase.buildables[i];
                 MenuFrame.GetComponentsInChildren<Image>()[1].sprite = BuildableDatabase.buildables[i].icon;
@@ -174,7 +194,8 @@ public class BuildUI : MonoBehaviour
 
     private void DesactivateUI()
     {
-        foreach (Transform child in BuildMenu.transform)
+        DisableInformation();
+        foreach (Transform child in BuildMenuContent.transform)
         {
             Destroy(child.gameObject);
         }

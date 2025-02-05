@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8093515231670832041}
   - component: {fileID: 306887000434331288}
   - component: {fileID: 5680566549174239553}
+  - component: {fileID: 5789076109960987901}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -48,8 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5243e296706f0a943901e2c445c5c384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UniversalObject:
-  - {fileID: 0}
+  UniversalObject: []
   Sun: {fileID: 0}
   Line: 0
   gravitationalConstant: 10
@@ -74,31 +74,11 @@ MonoBehaviour:
   itemUI: {fileID: 3275559440192933138, guid: 922e72d382f07eb4aac7cfeeada7571e, type: 3}
   contentUI: {fileID: 0}
   sortingDropDown: {fileID: 0}
-  allItem:
-  - {fileID: 11400000, guid: 919f307e2ea04e8499df050665df5fee, type: 2}
-  - {fileID: 11400000, guid: 25a0c8a8ddf37a642859f1c3b3c5870c, type: 2}
-  - {fileID: 11400000, guid: 1c2faa27fe1502a4e95db7bf4afbbf9d, type: 2}
-  - {fileID: 11400000, guid: 8a2975c5f5036894f9f4beeef9a4432f, type: 2}
-  - {fileID: 11400000, guid: 39a375caec1e13648bce0d32fe607fd2, type: 2}
-  - {fileID: 11400000, guid: d2de1cb1f0ce6994da61ec30368e3729, type: 2}
-  - {fileID: 11400000, guid: af77abf7f36c3c345b55851697946226, type: 2}
-  - {fileID: 11400000, guid: 0997f4c836fb6744d965f3c306c0e77a, type: 2}
-  - {fileID: 11400000, guid: 2e002194e1730304b899c71f76b80d19, type: 2}
-  - {fileID: 11400000, guid: beb29e7303b7ab24fb2a97040d26cb48, type: 2}
-  - {fileID: 11400000, guid: 33d32d24cc9caa64a8013b99b09e62e8, type: 2}
-  - {fileID: 11400000, guid: 84975c45eaf8cd64eb0af9b8aca3f236, type: 2}
-  - {fileID: 11400000, guid: 31228d5bfdb302d4daa762524dc194bf, type: 2}
-  - {fileID: 11400000, guid: b9562243922c9cb45af4bcdb44885373, type: 2}
-  - {fileID: 11400000, guid: ec1a957c86be39a4d9e064134053fa74, type: 2}
-  - {fileID: 11400000, guid: 32581dc3c83349540a130a01f135dd87, type: 2}
-  - {fileID: 11400000, guid: d05d65cc9ee1d6143b9660becdd8709c, type: 2}
-  - {fileID: 11400000, guid: 9ae0bb1f4ae5c04428a0f2f6b62decfd, type: 2}
-  - {fileID: 11400000, guid: cf08a317437eb91479fedfe0b235198d, type: 2}
-  - {fileID: 11400000, guid: 52c09b044aad3c343a91df1c7f89fed1, type: 2}
   informationUI: {fileID: 0}
   selectedItem: {fileID: 0}
   interaction: {fileID: 0}
   buttonPressed: {fileID: 0}
+  ItemDatabase: {fileID: 11400000, guid: a5e0d7285c1814440aa5e871afe00165, type: 2}
   mode: 0
   sortingType: 0
 --- !u!114 &8093515231670832041
@@ -139,4 +119,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 0.05
-  gamepadSensitivity: 0.25
+  gamepadSensitivity: 0.2
+--- !u!114 &5789076109960987901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7517874170609945322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279c835e84ae23241bc22abf57fa4c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildMenu: {fileID: 0}
+  BuildableDatabase: {fileID: 11400000, guid: 8a04838465b471d479a2b14d8303837b, type: 2}
+  BuildItemUI: {fileID: 6219797783664384143, guid: cb0599efd693e834d9b37f4692928c5a, type: 3}
+  InformationContent: {fileID: 0}
+  InformationObj: {fileID: 0}
+  RessourceIconObj: {fileID: 4982227176552488064, guid: 8884f80a97a0b264e991f6f2733ca571, type: 3}
+  isDisplay: 0
