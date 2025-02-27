@@ -9,7 +9,7 @@ public class ModuleSlot : MonoBehaviour
     [SerializeField] List<Transform> transforms = new List<Transform>();
     [SerializeField] List<Transform> transformsTaken;
     [SerializeField] GameObject station;
-
+    public bool playerInModule = false;
     public enum TYPE
     {
         CORRIDOR,
@@ -24,16 +24,20 @@ public class ModuleSlot : MonoBehaviour
 
     public void PlaceBuildable(GameObject obj, float _rotation, Vector3 _pos)
     {
+        //Destroy other anchor attach to me
         GameObject buildableObj = Instantiate(obj, _pos, Quaternion.Euler(0, _rotation, 0), station.transform);
-        buildableObj.GetComponent<ModuleSlot>().transforms.Remove(buildableObj.GetComponent<ModuleSlot>().GetNearestPoint(transform.position));
+        Transform otherAnchorToDestroy = buildableObj.GetComponent<ModuleSlot>().GetNearestPoint(transform.position);
+        buildableObj.GetComponent<ModuleSlot>().transforms.Remove(otherAnchorToDestroy);
+        buildableObj.tag = "Module Slot";
+        Destroy(otherAnchorToDestroy.gameObject);
 
         switch (type)
         {
             case TYPE.CORRIDOR:
+                //Disable my anchor
                 Transform anchorToDestroy = GetNearestPoint(_pos);
                 anchorToDestroy.gameObject.SetActive(false);
                 transforms.Remove(anchorToDestroy);
-               // AddTransformTaken(GetNearestPoint(_pos));
                 break;
             case TYPE.DESTROYABLE:
                 Destroy(gameObject);
@@ -77,11 +81,25 @@ public class ModuleSlot : MonoBehaviour
         transformsTaken.Add(_pos);
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Y'a l'joueur là !");
+            if (!playerInModule)
+            {
+                playerInModule = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (playerInModule)
+            {
+                playerInModule = false;
+            }
         }
     }
 

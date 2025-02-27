@@ -11,6 +11,7 @@ public class BuildSystem : MonoBehaviour
     [SerializeField] private Material hologramMat;
     [SerializeField] public bool isBuilding = false;
     public bool asInitBuildable = false;
+    private bool canBuild = false;
     public GameObject selectedBuildable;
     public GameObject buildHolo;
     private Color HoloColor = Color.red;
@@ -37,6 +38,7 @@ public class BuildSystem : MonoBehaviour
             {
                 buildHolo = Instantiate(selectedBuildable);
                 buildHolo.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                buildHolo.transform.tag = "Module Holo";
                 HoloColor = Color.red;
                 foreach (Renderer rend in buildHolo.GetComponentsInChildren<Renderer>())
                 {
@@ -46,34 +48,41 @@ public class BuildSystem : MonoBehaviour
 
                 foreach (Collider collide in buildHolo.GetComponentsInChildren<Collider>())
                 {
-                    collide.enabled = false;
+                    if (!collide.isTrigger)
+                    {
+                        collide.enabled = false;
+                    }
                 }
                 asInitBuildable = true;
             }
 
             buildHolo.transform.position = getDistanceNearObject();
             DetectModuleSlot();
+            checkCanBuild();
         }
     }
 
     private void DetectModuleSlot()
     {
-        RaycastHit hit;
+        RaycastHit[] hitAll = Physics.RaycastAll(cameraHead.transform.position, cameraHead.transform.forward, buildDistance);
 
-        Physics.Raycast(transform.position, transform.forward, out hit);
-
-        if (hit.transform != null && hit.transform.CompareTag("Module Slot"))
+        foreach (RaycastHit hit in hitAll)
         {
-            if (slot != hit.transform.GetComponent<ModuleSlot>())
+            if (hit.transform.CompareTag("Module Slot"))
             {
-                slot = hit.transform.GetComponent<ModuleSlot>();
+                if (slot != hit.transform.GetComponent<ModuleSlot>())
+                {
+                    slot = hit.transform.GetComponent<ModuleSlot>();
+                }
+                return;
+
             }
         }
-        else if (slot != null)
+
+        if (slot != null)
         {
             slot = null;
         }
-
     }
 
     Vector3 getDistanceNearObject()
@@ -82,8 +91,6 @@ public class BuildSystem : MonoBehaviour
 
         if (slot != null)
         {
-            SwapHoloColor(Color.blue);
-
             Transform slotAnchor = slot.GetNearestPoint(buildHolo.transform.position);
 
             if (slotAnchor != null)
@@ -96,16 +103,19 @@ public class BuildSystem : MonoBehaviour
             }
         }
 
-        if (hit.Length > 0)
+        for (int i = 0; i < hit.Length; i++)
         {
-            SwapHoloColor(Color.red);
-            return hit[0].point;
+            if (hit[i].transform.CompareTag("Module Holo"))
+            {
+                continue;
+            }
+            else
+            {
+                return hit[i].point;
+            }
         }
-        else
-        {
-            SwapHoloColor(Color.red);
-            return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
-        }
+        return cameraHead.transform.position + cameraHead.transform.forward * buildDistance;
+
     }
 
     private void SetRotationToAnchor(Transform _myTransform, Transform otherAnchor)
@@ -133,9 +143,23 @@ public class BuildSystem : MonoBehaviour
         }
     }
 
+    private void checkCanBuild()
+    {
+        if (isBuilding && slot != null && !buildHolo.GetComponent<ModuleSlot>().playerInModule)
+        {
+            SwapHoloColor(Color.blue);
+            canBuild = true;
+        }
+        else if(canBuild)
+        {
+            SwapHoloColor(Color.red);
+            canBuild = false;
+        }
+    }
+
     private void OnBuildPressed(InputAction.CallbackContext ctx)
     {
-        if (isBuilding && slot != null)
+        if (canBuild)
         {
             slot.PlaceBuildable(selectedBuildable, currentHoloRotation, buildHolo.transform.position);
             isBuilding = false;
@@ -154,7 +178,7 @@ public class BuildSystem : MonoBehaviour
 
     public void ResetBuildable()
     {
-        if(buildHolo)
+        if (buildHolo)
         {
             Destroy(buildHolo);
         }

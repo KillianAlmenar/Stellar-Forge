@@ -8,6 +8,7 @@ TagManager:
   - Spaceship
   - Module Slot
   - Station
+  - Module Holo
   layers:
   - Default
   - TransparentFX
