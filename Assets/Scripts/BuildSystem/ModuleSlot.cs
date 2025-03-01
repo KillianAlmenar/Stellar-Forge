@@ -9,7 +9,7 @@ public class ModuleSlot : MonoBehaviour
     [SerializeField] List<Transform> transforms = new List<Transform>();
     [SerializeField] List<Transform> transformsTaken;
     [SerializeField] GameObject station;
-    public bool playerInModule = false;
+    [HideInInspector] public bool playerInModule = false;
     public enum TYPE
     {
         CORRIDOR,
