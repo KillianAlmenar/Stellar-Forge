@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 306887000434331288}
   - component: {fileID: 5680566549174239553}
   - component: {fileID: 5789076109960987901}
+  - component: {fileID: 4397559352652043690}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -132,10 +133,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279c835e84ae23241bc22abf57fa4c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildMenu: {fileID: 0}
+  BuildMenuContent: {fileID: 0}
   BuildableDatabase: {fileID: 11400000, guid: 8a04838465b471d479a2b14d8303837b, type: 2}
   BuildItemUI: {fileID: 6219797783664384143, guid: cb0599efd693e834d9b37f4692928c5a, type: 3}
   InformationContent: {fileID: 0}
   InformationObj: {fileID: 0}
   RessourceIconObj: {fileID: 4982227176552488064, guid: 8884f80a97a0b264e991f6f2733ca571, type: 3}
   isDisplay: 0
+--- !u!114 &4397559352652043690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7517874170609945322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a3e5fbcc9c1474eac2f2eb1bf3bb40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractObj: {fileID: 0}

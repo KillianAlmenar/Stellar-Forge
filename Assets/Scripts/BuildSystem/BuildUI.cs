@@ -79,7 +79,7 @@ public class BuildUI : MonoBehaviour
             }
         }
 
-        if(!isFind)
+        if (!isFind)
         {
             DisableInformation();
         }
@@ -111,7 +111,7 @@ public class BuildUI : MonoBehaviour
 
             foreach (Ressources ressources in buildable.ressources)
             {
-                if(idSaved.Contains(ressources.id))
+                if (idSaved.Contains(ressources.id))
                 {
                     continue;
                 }
@@ -179,12 +179,21 @@ public class BuildUI : MonoBehaviour
 
         List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenuContent.transform.position, Screen.height / 4, totalBuildableUnlocked, Utility.Axis.XY);
 
+        int posCount = 0;
+
+        if (totalBuildableUnlocked == 1)
+        {
+            //circlePosition[0] = new Vector2(Screen.width / 2, Screen.height / 2);
+            circlePosition[0] = Vector2.zero;
+        }
+
         for (int i = 0; i < BuildableDatabase.buildables.Count; i++)
         {
             if (BuildableDatabase.buildables[i].isUnlocked)
             {
                 GameObject MenuFrame = Instantiate(BuildItemUI, BuildMenuContent.transform);
-                MenuFrame.transform.position = circlePosition[i];
+                MenuFrame.transform.localPosition = circlePosition[posCount];
+                posCount++;
                 MenuFrame.GetComponent<SelectBuildable>().buildable = BuildableDatabase.buildables[i];
                 MenuFrame.GetComponentsInChildren<Image>()[1].sprite = BuildableDatabase.buildables[i].icon;
             }

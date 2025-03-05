@@ -59,6 +59,7 @@ public class MovableObj : MonoBehaviour
 
         }
     }
+
     public Rigidbody Rigidbody
     {
         get

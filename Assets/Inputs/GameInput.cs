@@ -107,6 +107,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""398a8fb5-6e5a-45e5-b88b-0d08c91e2857"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -426,6 +435,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""RotateBuild"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8711a29d-4993-48fa-b2ae-2a796ef85158"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a74bd2b5-174c-4eda-95a2-52f9114c0cbc"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -769,6 +800,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_BuildMenu = m_Player.FindAction("BuildMenu", throwIfNotFound: true);
         m_Player_Build = m_Player.FindAction("Build", throwIfNotFound: true);
         m_Player_RotateBuild = m_Player.FindAction("RotateBuild", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // Spaceship
         m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
         m_Spaceship_Move = m_Spaceship.FindAction("Move", throwIfNotFound: true);
@@ -849,6 +881,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_BuildMenu;
     private readonly InputAction m_Player_Build;
     private readonly InputAction m_Player_RotateBuild;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
@@ -862,6 +895,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @BuildMenu => m_Wrapper.m_Player_BuildMenu;
         public InputAction @Build => m_Wrapper.m_Player_Build;
         public InputAction @RotateBuild => m_Wrapper.m_Player_RotateBuild;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -898,6 +932,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @RotateBuild.started += instance.OnRotateBuild;
             @RotateBuild.performed += instance.OnRotateBuild;
             @RotateBuild.canceled += instance.OnRotateBuild;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -929,6 +966,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @RotateBuild.started -= instance.OnRotateBuild;
             @RotateBuild.performed -= instance.OnRotateBuild;
             @RotateBuild.canceled -= instance.OnRotateBuild;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1099,6 +1139,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnBuildMenu(InputAction.CallbackContext context);
         void OnBuild(InputAction.CallbackContext context);
         void OnRotateBuild(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface ISpaceshipActions
     {
