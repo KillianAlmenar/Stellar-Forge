@@ -7,7 +7,7 @@ public class InteractionInvItem : MonoBehaviour
 {
     [SerializeField] private GameObject quantity;
     private bool isConsommable = false;
-
+    [SerializeField] InventoryUI inventoryUI;
     private void Update()
     {
         if (GameManager.instance.Player.GetComponent<Inventory>().selectedItem is Consommable && !isConsommable)
@@ -22,7 +22,6 @@ public class InteractionInvItem : MonoBehaviour
 
     public void UsePressed()
     {
-
         if (quantity.activeSelf)
         {
             quantity.SetActive(false);
@@ -33,32 +32,22 @@ public class InteractionInvItem : MonoBehaviour
             consommable.Use();
             GameManager.instance.Player.GetComponent<Inventory>().items.Remove(GameManager.instance.Player.GetComponent<Inventory>().selectedItem);
             GameManager.instance.Player.GetComponent<Inventory>().selectedItem = null;
-            InventoryUI.instance.updateUI();
-
+            inventoryUI.updateUI();
         }
-
-
     }
 
     public void UseQuantityPressed()
     {
         ItemInventory item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
 
-
-        if (item.stackSize == 1 || GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)
+        if(item as Consommable && item.stackSize > 1 && GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) > 1)
         {
-
-        }
-        else
-        {
-
             if (!quantity.activeSelf)
             {
                 quantity.SetActive(true);
                 quantity.GetComponent<QuantitySelection>().useButton = true;
             }
             quantity.transform.position = transform.position + new Vector3(100, 0, 0);
-
         }
     }
 
@@ -66,18 +55,16 @@ public class InteractionInvItem : MonoBehaviour
     {
         ItemInventory item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
 
-
         if (item.stackSize == 1 || GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)
         {
             GameManager.instance.Player.GetComponent<Inventory>().items.Remove(item);
-            InventoryUI.instance.updateUI();
+            inventoryUI.updateUI();
 
             GameManager.instance.Player.GetComponent<Inventory>().selectedItem = null;
 
         }
         else
         {
-
             if (!quantity.activeSelf)
             {
                 quantity.SetActive(true);

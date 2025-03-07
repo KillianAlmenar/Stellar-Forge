@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7235179841609681364}
   - component: {fileID: 8027681537559173614}
-  - component: {fileID: 5591286538533595002}
   - component: {fileID: 8093515231670832041}
   - component: {fileID: 306887000434331288}
   - component: {fileID: 5680566549174239553}
@@ -57,31 +56,6 @@ MonoBehaviour:
   onShip: 0
   Player: {fileID: 0}
   onKeyboard: 1
---- !u!114 &5591286538533595002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7517874170609945322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08e950041edaed4ebe4f8c6b975b2ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDisplay: 0
-  playerInventoryUI: {fileID: 0}
-  playerInventory: {fileID: 0}
-  itemUI: {fileID: 3275559440192933138, guid: 922e72d382f07eb4aac7cfeeada7571e, type: 3}
-  contentUI: {fileID: 0}
-  sortingDropDown: {fileID: 0}
-  informationUI: {fileID: 0}
-  selectedItem: {fileID: 0}
-  interaction: {fileID: 0}
-  buttonPressed: {fileID: 0}
-  ItemDatabase: {fileID: 11400000, guid: a5e0d7285c1814440aa5e871afe00165, type: 2}
-  mode: 0
-  sortingType: 0
 --- !u!114 &8093515231670832041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676500f84d3c7ab4798b881bfd7fdd18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInventoryUI: {fileID: 0}
 --- !u!114 &5680566549174239553
 MonoBehaviour:
   m_ObjectHideFlags: 0

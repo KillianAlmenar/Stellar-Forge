@@ -73,6 +73,7 @@ public class BuildSystem : MonoBehaviour
                 if (slot != hit.transform.GetComponent<ModuleSlot>())
                 {
                     slot = hit.transform.GetComponent<ModuleSlot>();
+                    Debug.Log(slot.transform.name);
                 }
                 return;
 
@@ -145,7 +146,7 @@ public class BuildSystem : MonoBehaviour
 
     private void checkCanBuild()
     {
-        if (isBuilding && slot != null && !buildHolo.GetComponent<ModuleSlot>().playerInModule)
+        if (isBuilding && slot != null && slot.anchors.Count > 0 && !buildHolo.GetComponent<ModuleSlot>().playerInModule)
         {
             SwapHoloColor(Color.blue);
             canBuild = true;
@@ -163,6 +164,7 @@ public class BuildSystem : MonoBehaviour
         {
             slot.PlaceBuildable(selectedBuildable, currentHoloRotation, buildHolo.transform.position);
             isBuilding = false;
+            canBuild= false;
             Destroy(buildHolo);
         }
     }

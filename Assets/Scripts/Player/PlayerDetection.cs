@@ -7,7 +7,7 @@ public class PlayerDetection : MonoBehaviour
 {
     [SerializeField] private GameObject head;
     private bool interactSwitch = false;
-
+    IInteractable interactable;
     private void OnEnable()
     {
         GameManager.instance.gameInput.Player.Interact.performed += InteractPerformed;
@@ -31,12 +31,14 @@ public class PlayerDetection : MonoBehaviour
         {
             if (!interactSwitch)
             {
+                interactable = raycasts.transform.GetComponent<IInteractable>();
                 interactSwitch = true;
                 HUDManager.Instance.SwitchInteractObject(true);
             }
         }
         else if (interactSwitch)
         {
+            interactable = null;
             interactSwitch = false;
             HUDManager.Instance.SwitchInteractObject(false);
         }
@@ -44,7 +46,10 @@ public class PlayerDetection : MonoBehaviour
     
     private void InteractPerformed(InputAction.CallbackContext ctx)
     {
-
+        if(interactable != null)
+        {
+            interactable.Interact();
+        }
     }
 
 }

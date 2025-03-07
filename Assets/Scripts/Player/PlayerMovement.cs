@@ -18,6 +18,7 @@ public class PlayerMovement : Movement
     private Vector3 targetRotationVec = Vector3.zero;
     private Vector3 targetCamVec = Vector3.zero;
     private BuildSystem buildSystem;
+    private bool needStabilize = false;
 
     private void Start()
     {
@@ -37,6 +38,9 @@ public class PlayerMovement : Movement
         GameManager.instance.gameInput.Player.Down.performed += OnDownPerformed;
         GameManager.instance.gameInput.Player.Up.canceled += OnUpCanceled;
         GameManager.instance.gameInput.Player.Down.canceled += OnDownCanceled;
+        GameManager.instance.gameInput.Player.Stabilize.performed += OnStabilizePerformed;
+        GameManager.instance.gameInput.Player.Stabilize.canceled += OnStabilizeCanceled;
+
     }
 
     private void OnDisable()
@@ -50,11 +54,30 @@ public class PlayerMovement : Movement
         GameManager.instance.gameInput.Player.Down.performed -= OnDownPerformed;
         GameManager.instance.gameInput.Player.Up.canceled -= OnUpCanceled;
         GameManager.instance.gameInput.Player.Down.canceled -= OnDownCanceled;
+        GameManager.instance.gameInput.Player.Stabilize.performed -= OnStabilizePerformed;
+        GameManager.instance.gameInput.Player.Stabilize.canceled -= OnStabilizeCanceled;
+
     }
 
     private void FixedUpdate()
     {
         Move();
+
+        if (needStabilize)
+        {
+            if (rb.velocity.magnitude > rb.velocity.normalized.magnitude)
+            {
+                rb.velocity -= rb.velocity.normalized;
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+            }
+            if(rb.angularVelocity.magnitude > 0)
+            { 
+                rb.angularVelocity = Vector3.zero;
+            }
+        }
     }
 
     private void Update()
@@ -145,6 +168,16 @@ public class PlayerMovement : Movement
         {
             jumpBtn = true;
         }
+    }
+
+    private void OnStabilizePerformed(InputAction.CallbackContext ctx)
+    {
+        needStabilize = true;
+    }
+
+    private void OnStabilizeCanceled(InputAction.CallbackContext ctx)
+    {
+        needStabilize = false;
     }
 
 }

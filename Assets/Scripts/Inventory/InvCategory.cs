@@ -4,43 +4,44 @@ using UnityEngine;
 
 public class InvCategory : MonoBehaviour
 {
+    [SerializeField] InventoryUI inventoryUI;
     public void AllPressed()
     {
-        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.ALL;
-        InventoryUI.instance.updateUI();
+        inventoryUI.sortingType = InventoryUI.SORTINGTYPE.ALL;
+        inventoryUI.updateUI();
     }
 
     public void WeaponPressed()
     {
-        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.WEAPON;
-        InventoryUI.instance.updateUI();
+        inventoryUI.sortingType = InventoryUI.SORTINGTYPE.WEAPON;
+        inventoryUI.updateUI();
     }
 
     public void KeyItemPressed()
     {
-        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.KEYITEM;
-        InventoryUI.instance.updateUI();
+        inventoryUI.sortingType = InventoryUI.SORTINGTYPE.KEYITEM;
+        inventoryUI.updateUI();
 
     }
 
     public void ConsommablePressed()
     {
-        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.CONSOMMABLE;
-        InventoryUI.instance.updateUI();
+        inventoryUI.sortingType = InventoryUI.SORTINGTYPE.CONSOMMABLE;
+        inventoryUI.updateUI();
 
     }
 
     public void ArmorPressed()
     {
-        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.ARMOR;
-        InventoryUI.instance.updateUI();
+        inventoryUI.sortingType = InventoryUI.SORTINGTYPE.ARMOR;
+        inventoryUI.updateUI();
 
     }
 
     public void RessourcePressed()
     {
-        InventoryUI.instance.sortingType = InventoryUI.SORTINGTYPE.RESSOURCE;
-        InventoryUI.instance.updateUI();
+        inventoryUI.sortingType = InventoryUI.SORTINGTYPE.RESSOURCE;
+        inventoryUI.updateUI();
 
     }
 

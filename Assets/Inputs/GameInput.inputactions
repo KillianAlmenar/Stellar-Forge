@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Stabilize",
+                    "type": "Button",
+                    "id": "5e2adb79-2d7d-4506-a2d6-a5e62f7232c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -437,6 +446,17 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e19c70b-f744-4e77-8ee6-f7d01250aed5",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Stabilize",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -692,6 +712,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CloseBuildMenu",
+                    "type": "Button",
+                    "id": "6ace4f8e-b212-4639-848e-2bdb95eb00c8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -736,6 +765,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56cc84aa-cb72-4487-b898-3f8af8724a98",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "CloseBuildMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "446cd460-69f7-48d8-8baa-dddc6add10d2",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CloseBuildMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

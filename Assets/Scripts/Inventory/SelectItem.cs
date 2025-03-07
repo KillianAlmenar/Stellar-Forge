@@ -6,7 +6,7 @@ public class SelectItem : MonoBehaviour
 {
     [SerializeField] private Inventory playerInventory;
     public ItemInventory item;
-
+    public InventoryUI inventoryUI;
     private void Start()
     {
         playerInventory = GameManager.instance.Player.GetComponent<Inventory>();
@@ -16,9 +16,9 @@ public class SelectItem : MonoBehaviour
     public void buttonPressed()
     {
         playerInventory.selectedItem = null;
-        InventoryUI.instance.UpdateInformationUI();
+        inventoryUI.UpdateInformationUI();
         playerInventory.selectedItem = item;
-        InventoryUI.instance.buttonPressed = gameObject;
+        inventoryUI.buttonPressed = gameObject;
     }
  
 }

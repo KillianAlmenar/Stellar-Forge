@@ -9,6 +9,7 @@ public class QuantitySelection : MonoBehaviour
     private int quantity;
     ItemInventory item;
     public bool useButton = false;
+    [SerializeField] public InventoryUI inventoryUI;
 
     private void Update()
     {
@@ -70,7 +71,6 @@ public class QuantitySelection : MonoBehaviour
         {
             if (quantity > 0)
             {
-
                 if (testedItem == item && testedItem is Consommable consommable)
                 {
                     if (useButton)
@@ -79,7 +79,12 @@ public class QuantitySelection : MonoBehaviour
                     }
                     itemToDestroy.Add(item);
                     quantity -= 1;
+                }
 
+                if (!useButton && testedItem == item && testedItem is Ressources ressources)
+                {
+                    itemToDestroy.Add(item);
+                    quantity -= 1;
                 }
             }
             else
@@ -93,7 +98,7 @@ public class QuantitySelection : MonoBehaviour
             GameManager.instance.Player.GetComponent<Inventory>().items.Remove(testtedItem);
         }
 
-        InventoryUI.instance.updateUI();
+        inventoryUI.updateUI();
 
         quantity = 1;
         updateText();

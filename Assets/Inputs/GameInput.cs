@@ -116,6 +116,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Stabilize"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e2adb79-2d7d-4506-a2d6-a5e62f7232c9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -459,6 +468,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e19c70b-f744-4e77-8ee6-f7d01250aed5"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Stabilize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -714,6 +734,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseBuildMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ace4f8e-b212-4639-848e-2bdb95eb00c8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -760,6 +789,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56cc84aa-cb72-4487-b898-3f8af8724a98"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CloseBuildMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""446cd460-69f7-48d8-8baa-dddc6add10d2"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CloseBuildMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -801,6 +852,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_Build = m_Player.FindAction("Build", throwIfNotFound: true);
         m_Player_RotateBuild = m_Player.FindAction("RotateBuild", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Stabilize = m_Player.FindAction("Stabilize", throwIfNotFound: true);
         // Spaceship
         m_Spaceship = asset.FindActionMap("Spaceship", throwIfNotFound: true);
         m_Spaceship_Move = m_Spaceship.FindAction("Move", throwIfNotFound: true);
@@ -811,6 +863,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseInventory = m_UI.FindAction("CloseInventory", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
+        m_UI_CloseBuildMenu = m_UI.FindAction("CloseBuildMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -882,6 +935,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Build;
     private readonly InputAction m_Player_RotateBuild;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Stabilize;
     public struct PlayerActions
     {
         private @GameInput m_Wrapper;
@@ -896,6 +950,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Build => m_Wrapper.m_Player_Build;
         public InputAction @RotateBuild => m_Wrapper.m_Player_RotateBuild;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Stabilize => m_Wrapper.m_Player_Stabilize;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -935,6 +990,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Stabilize.started += instance.OnStabilize;
+            @Stabilize.performed += instance.OnStabilize;
+            @Stabilize.canceled += instance.OnStabilize;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -969,6 +1027,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Stabilize.started -= instance.OnStabilize;
+            @Stabilize.performed -= instance.OnStabilize;
+            @Stabilize.canceled -= instance.OnStabilize;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1062,12 +1123,14 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_CloseInventory;
     private readonly InputAction m_UI_Back;
+    private readonly InputAction m_UI_CloseBuildMenu;
     public struct UIActions
     {
         private @GameInput m_Wrapper;
         public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @CloseInventory => m_Wrapper.m_UI_CloseInventory;
         public InputAction @Back => m_Wrapper.m_UI_Back;
+        public InputAction @CloseBuildMenu => m_Wrapper.m_UI_CloseBuildMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1083,6 +1146,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
+            @CloseBuildMenu.started += instance.OnCloseBuildMenu;
+            @CloseBuildMenu.performed += instance.OnCloseBuildMenu;
+            @CloseBuildMenu.canceled += instance.OnCloseBuildMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1093,6 +1159,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
+            @CloseBuildMenu.started -= instance.OnCloseBuildMenu;
+            @CloseBuildMenu.performed -= instance.OnCloseBuildMenu;
+            @CloseBuildMenu.canceled -= instance.OnCloseBuildMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1140,6 +1209,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnBuild(InputAction.CallbackContext context);
         void OnRotateBuild(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnStabilize(InputAction.CallbackContext context);
     }
     public interface ISpaceshipActions
     {
@@ -1152,5 +1222,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     {
         void OnCloseInventory(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnCloseBuildMenu(InputAction.CallbackContext context);
     }
 }

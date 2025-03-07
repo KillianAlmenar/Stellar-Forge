@@ -9,32 +9,19 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    public bool isDisplay = false;
-    public GameObject playerInventoryUI;
-    public Inventory playerInventory;
+    [HideInInspector] public bool isDisplay = false;
+    public GameObject InventoryObj;
+    public Inventory Inventory;
     public GameObject itemUI;
     public GameObject contentUI;
     public TMP_Dropdown sortingDropDown;
     public GameObject informationUI;
-    public ItemInventory selectedItem;
+    [HideInInspector] public ItemInventory selectedItem;
     public GameObject interaction;
-    static public InventoryUI instance = null;
     private List<bool> sortingTypeBool = new List<bool> { false, false, false, false, false };
-    public GameObject buttonPressed = null;
+    [HideInInspector] public GameObject buttonPressed = null;
     private GameObject previousObjectSelected = null;
     public ItemDatabase ItemDatabase;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
 
     public enum SORTINGMODE
     {
@@ -60,23 +47,23 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        playerInventoryUI.SetActive(false);
+        InventoryObj.SetActive(false);
 
     }
 
     private void Update()
     {
-        if (isDisplay && !playerInventoryUI.activeSelf)
+        if (isDisplay && !InventoryObj.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
-            playerInventoryUI.SetActive(true);
+            InventoryObj.SetActive(true);
             updateUI();
         }
-        else if (!isDisplay && playerInventoryUI.activeSelf)
+        else if (!isDisplay && InventoryObj.activeSelf)
         {
             Cursor.lockState = CursorLockMode.Locked;
             DesactivateUI();
-            playerInventoryUI.SetActive(false);
+            InventoryObj.SetActive(false);
         }
 
         UpdateInformationUI();
@@ -94,14 +81,14 @@ public class InventoryUI : MonoBehaviour
             itemsId.Add(ItemDatabase.items[i].name.GetHashCode(), 0);
         }
 
-        foreach (ItemInventory item in playerInventory.items)
+        foreach (ItemInventory item in Inventory.items)
         {
             itemsId[item.id] += 1;
         }
 
         SortList();
 
-        foreach (ItemInventory item in playerInventory.items)
+        foreach (ItemInventory item in Inventory.items)
         {
             if (!itemsNameDisplayed.Contains(item.name))
             {
@@ -152,9 +139,9 @@ public class InventoryUI : MonoBehaviour
                         {
                             EventSystem.current.SetSelectedGameObject(tempItemUI.GetComponentInChildren<Button>().gameObject);
                         }
-
-                        tempItemUI.GetComponentInChildren<SelectItem>().item = GetItemById(item.id);
-
+                        SelectItem tempItemSelect = tempItemUI.GetComponentInChildren<SelectItem>();
+                        tempItemSelect.item = GetItemById(item.id);
+                        tempItemSelect.inventoryUI = this;
                         tempItemUI.GetComponentsInChildren<Image>()[1].sprite = GetItemById(item.id).icon;
 
 
@@ -174,7 +161,11 @@ public class InventoryUI : MonoBehaviour
                 {
                     GameObject tempItemUI = Instantiate(itemUI, contentUI.transform);
                     tempItemUI.GetComponentInChildren<TextMeshProUGUI>().text = " ";
-                    tempItemUI.GetComponentInChildren<SelectItem>().item = GetItemById(item.id);
+
+                    SelectItem tempItemSelect = tempItemUI.GetComponentInChildren<SelectItem>();
+                    tempItemSelect.item = GetItemById(item.id);
+                    tempItemSelect.inventoryUI = this;
+
                     tempItemUI.GetComponentsInChildren<Image>()[1].sprite = GetItemById(item.id).icon;
 
                     switch (GetItemById(item.id).rarity)
@@ -191,8 +182,11 @@ public class InventoryUI : MonoBehaviour
                 {
                     GameObject tempItemUI = Instantiate(itemUI, contentUI.transform);
                     tempItemUI.GetComponentInChildren<TextMeshProUGUI>().text = itemsId[item.id].ToString();
-                    tempItemUI.GetComponentInChildren<SelectItem>().item = GetItemById(item.id);
                     tempItemUI.GetComponentsInChildren<Image>()[1].sprite = GetItemById(item.id).icon;
+
+                    SelectItem tempItemSelect = tempItemUI.GetComponentInChildren<SelectItem>();
+                    tempItemSelect.item = GetItemById(item.id);
+                    tempItemSelect.inventoryUI = this;
 
                     switch (GetItemById(item.id).rarity)
                     {
@@ -227,7 +221,7 @@ public class InventoryUI : MonoBehaviour
         switch (mode)
         {
             case SORTINGMODE.ID:
-                SortByID(playerInventory.items);
+                SortByID(Inventory.items);
                 break;
             case SORTINGMODE.TYPE:
                 SortByType();
@@ -267,7 +261,7 @@ public class InventoryUI : MonoBehaviour
     {
         List<ItemInventory> itemListSorted = new List<ItemInventory>();
         List<ItemInventory> itemTrash = new List<ItemInventory>();
-        foreach (ItemInventory item in playerInventory.items)
+        foreach (ItemInventory item in Inventory.items)
         {
             if (!itemListSorted.Contains(item))
             {
@@ -337,14 +331,14 @@ public class InventoryUI : MonoBehaviour
             itemListSorted.Add(item);
         }
 
-        playerInventory.items = itemListSorted;
+        Inventory.items = itemListSorted;
     }
 
     public void SortByRarity()
     {
         List<ItemInventory> itemListSorted = new List<ItemInventory>();
         List<ItemInventory> itemTrash = new List<ItemInventory>();
-        foreach (ItemInventory item in playerInventory.items)
+        foreach (ItemInventory item in Inventory.items)
         {
             if (!itemListSorted.Contains(item))
             {
@@ -429,7 +423,7 @@ public class InventoryUI : MonoBehaviour
             itemListSorted.Add(item);
         }
 
-        playerInventory.items = itemListSorted;
+        Inventory.items = itemListSorted;
     }
 
     public void SortInventory()
@@ -441,51 +435,55 @@ public class InventoryUI : MonoBehaviour
     public void UpdateInformationUI()
     {
 
-        if (playerInventory.selectedItem != null && selectedItem != playerInventory.selectedItem)
+        if (Inventory.selectedItem != null && selectedItem != Inventory.selectedItem)
         {
-            selectedItem = playerInventory.selectedItem;
+            selectedItem = Inventory.selectedItem;
             interaction.SetActive(true);
             previousObjectSelected = EventSystem.current.currentSelectedGameObject;
-            informationUI.GetComponent<InformationInv>().SetInformations(playerInventory.selectedItem);
+            informationUI.GetComponent<InformationInv>().SetInformations(Inventory.selectedItem);
 
             if(buttonPressed != null)
             {
                 interaction.transform.position = buttonPressed.transform.position;
             }
 
-
-            if (selectedItem.stackSize == 1 || playerInventory.GetNumberOfItem(selectedItem) <= 1)
+            if(!(selectedItem as Consommable))
             {
+                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.grey;
                 interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.grey;
             }
             else
             {
+                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.white;
                 interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.white;
             }
 
         }
 
-        if (playerInventory.selectedItem != null && !informationUI.activeSelf)
+        if (Inventory.selectedItem != null && !informationUI.activeSelf)
         {
             informationUI.SetActive(true);
             interaction.SetActive(true);
             previousObjectSelected = EventSystem.current.currentSelectedGameObject;
-            informationUI.GetComponent<InformationInv>().SetInformations(playerInventory.selectedItem);
+            informationUI.GetComponent<InformationInv>().SetInformations(Inventory.selectedItem);
             if (buttonPressed != null)
             {
                 interaction.transform.position = buttonPressed.transform.position;
             }
-            if (selectedItem.stackSize == 1 || playerInventory.GetNumberOfItem(selectedItem) <= 1)
+
+            if (!(selectedItem as Consommable))
             {
+                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.grey;
                 interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.grey;
             }
             else
             {
+                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.white;
                 interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.white;
             }
 
         }
-        else if (playerInventory.selectedItem == null && informationUI.activeSelf)
+        else if (Inventory.selectedItem == null && informationUI.activeSelf)
         {
             informationUI.SetActive(false);
             interaction.SetActive(false);

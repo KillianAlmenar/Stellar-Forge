@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -168,7 +169,6 @@ public class BuildUI : MonoBehaviour
     {
         int totalBuildableUnlocked = 0;
 
-
         for (int i = 0; i < BuildableDatabase.buildables.Count; i++)
         {
             if (BuildableDatabase.buildables[i].isUnlocked)
@@ -176,14 +176,12 @@ public class BuildUI : MonoBehaviour
                 totalBuildableUnlocked++;
             }
         }
-
-        List<Vector3> circlePosition = Utility.CalculateCirclePositions(BuildMenuContent.transform.position, Screen.height / 4, totalBuildableUnlocked, Utility.Axis.XY);
+        List<Vector3> circlePosition = Utility.CalculateCirclePositions(Vector3.zero, Screen.height / 4, totalBuildableUnlocked, Utility.Axis.XY);
 
         int posCount = 0;
 
         if (totalBuildableUnlocked == 1)
         {
-            //circlePosition[0] = new Vector2(Screen.width / 2, Screen.height / 2);
             circlePosition[0] = Vector2.zero;
         }
 

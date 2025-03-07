@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class ModuleSlot : MonoBehaviour
 {
-    [SerializeField] List<Transform> transforms = new List<Transform>();
+    [SerializeField] public List<Transform> anchors = new List<Transform>();
     [SerializeField] List<Transform> transformsTaken;
     [SerializeField] GameObject station;
     [HideInInspector] public bool playerInModule = false;
@@ -27,7 +27,7 @@ public class ModuleSlot : MonoBehaviour
         //Destroy other anchor attach to me
         GameObject buildableObj = Instantiate(obj, _pos, Quaternion.Euler(0, _rotation, 0), station.transform);
         Transform otherAnchorToDestroy = buildableObj.GetComponent<ModuleSlot>().GetNearestPoint(transform.position);
-        buildableObj.GetComponent<ModuleSlot>().transforms.Remove(otherAnchorToDestroy);
+        buildableObj.GetComponent<ModuleSlot>().anchors.Remove(otherAnchorToDestroy);
         buildableObj.tag = "Module Slot";
         Destroy(otherAnchorToDestroy.gameObject);
 
@@ -37,7 +37,7 @@ public class ModuleSlot : MonoBehaviour
                 //Disable my anchor
                 Transform anchorToDestroy = GetNearestPoint(_pos);
                 anchorToDestroy.gameObject.SetActive(false);
-                transforms.Remove(anchorToDestroy);
+                anchors.Remove(anchorToDestroy);
                 break;
             case TYPE.DESTROYABLE:
                 Destroy(gameObject);
@@ -54,7 +54,7 @@ public class ModuleSlot : MonoBehaviour
         {
             case TYPE.CORRIDOR:
 
-                foreach (Transform t in transforms)
+                foreach (Transform t in anchors)
                 {
                     if (transformsTaken.Contains(t))
                     {
@@ -70,9 +70,9 @@ public class ModuleSlot : MonoBehaviour
                 return nearestPoint;
             case TYPE.DESTROYABLE:
 
-                return transforms[0];
+                return anchors[0];
             default:
-                return transforms[0];
+                return anchors[0];
         }
     }
 
@@ -87,7 +87,7 @@ public class ModuleSlot : MonoBehaviour
         {
             if (!playerInModule)
             {
-                playerInModule = true;
+                //playerInModule = true;
             }
         }
     }

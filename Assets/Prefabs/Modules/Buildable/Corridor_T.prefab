@@ -2496,12 +2496,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a274961679ad2ac458c4b6422f993002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transforms:
+  anchors:
   - {fileID: 4225660681240504096}
   - {fileID: 5896576151957533376}
   - {fileID: 6394497968111766751}
   transformsTaken: []
   station: {fileID: 0}
+  playerInModule: 0
   type: 0
 --- !u!1 &166402
 GameObject:
