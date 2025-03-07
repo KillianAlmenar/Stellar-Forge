@@ -15,13 +15,13 @@ public class InventoryUI : MonoBehaviour
     public GameObject itemUI;
     public GameObject contentUI;
     public TMP_Dropdown sortingDropDown;
-    public GameObject informationUI;
     [HideInInspector] public ItemInventory selectedItem;
     public GameObject interaction;
-    private List<bool> sortingTypeBool = new List<bool> { false, false, false, false, false };
+    protected List<bool> sortingTypeBool = new List<bool> { false, false, false, false, false };
     [HideInInspector] public GameObject buttonPressed = null;
-    private GameObject previousObjectSelected = null;
+    protected GameObject previousObjectSelected = null;
     public ItemDatabase ItemDatabase;
+    public GameObject informationUI;
 
     public enum SORTINGMODE
     {
@@ -51,7 +51,7 @@ public class InventoryUI : MonoBehaviour
 
     }
 
-    private void Update()
+    protected void Update()
     {
         if (isDisplay && !InventoryObj.activeSelf)
         {
@@ -65,9 +65,6 @@ public class InventoryUI : MonoBehaviour
             DesactivateUI();
             InventoryObj.SetActive(false);
         }
-
-        UpdateInformationUI();
-
     }
 
     public void updateUI()
@@ -432,64 +429,48 @@ public class InventoryUI : MonoBehaviour
         updateUI();
     }
 
+    public void ActivateInteraction()
+    {
+        interaction.SetActive(true);
+
+        if (buttonPressed != null)
+        {
+            interaction.transform.position = buttonPressed.transform.position;
+        }
+
+        if (this as PlayerInventoryUI && !(selectedItem as Consommable))
+        {
+            interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.grey;
+            interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.grey;
+        }
+        else
+        {
+            interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.white;
+            interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.white;
+        }
+    }
+
     public void UpdateInformationUI()
     {
-
         if (Inventory.selectedItem != null && selectedItem != Inventory.selectedItem)
         {
             selectedItem = Inventory.selectedItem;
-            interaction.SetActive(true);
             previousObjectSelected = EventSystem.current.currentSelectedGameObject;
             informationUI.GetComponent<InformationInv>().SetInformations(Inventory.selectedItem);
-
-            if(buttonPressed != null)
-            {
-                interaction.transform.position = buttonPressed.transform.position;
-            }
-
-            if(!(selectedItem as Consommable))
-            {
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.grey;
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.grey;
-            }
-            else
-            {
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.white;
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.white;
-            }
-
         }
 
         if (Inventory.selectedItem != null && !informationUI.activeSelf)
         {
             informationUI.SetActive(true);
-            interaction.SetActive(true);
             previousObjectSelected = EventSystem.current.currentSelectedGameObject;
             informationUI.GetComponent<InformationInv>().SetInformations(Inventory.selectedItem);
-            if (buttonPressed != null)
-            {
-                interaction.transform.position = buttonPressed.transform.position;
-            }
-
-            if (!(selectedItem as Consommable))
-            {
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.grey;
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.grey;
-            }
-            else
-            {
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[0].color = Color.white;
-                interaction.GetComponentsInChildren<TextMeshProUGUI>()[1].color = Color.white;
-            }
 
         }
         else if (Inventory.selectedItem == null && informationUI.activeSelf)
         {
             informationUI.SetActive(false);
-            interaction.SetActive(false);
             EventSystem.current.SetSelectedGameObject(previousObjectSelected);
         }
 
     }
-
 }

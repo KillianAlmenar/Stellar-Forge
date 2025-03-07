@@ -56,6 +56,8 @@ MonoBehaviour:
   onShip: 0
   Player: {fileID: 0}
   onKeyboard: 1
+  playerInventoryUI: {fileID: 0}
+  otherInventoryUI: {fileID: 0}
 --- !u!114 &8093515231670832041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676500f84d3c7ab4798b881bfd7fdd18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventoryUI: {fileID: 0}
 --- !u!114 &5680566549174239553
 MonoBehaviour:
   m_ObjectHideFlags: 0

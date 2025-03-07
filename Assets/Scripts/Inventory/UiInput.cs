@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class UiInput : MonoBehaviour
 {
-    [SerializeField] InventoryUI playerInventoryUI;
     private void OnEnable()
     {
         GameManager.instance.gameInput.UI.CloseInventory.performed += OnCloseInventoryPerformed;
@@ -28,7 +27,7 @@ public class UiInput : MonoBehaviour
     {
         GameManager.instance.gameInput.Player.Disable();
         GameManager.instance.gameInput.UI.Enable();
-        playerInventoryUI.isDisplay = true;
+        GameManager.instance.playerInventoryUI.isDisplay = true;
     }
 
     private void OnBuildMenuPerformed(InputAction.CallbackContext ctx)
@@ -50,12 +49,20 @@ public class UiInput : MonoBehaviour
 
     private void OnCloseInventoryPerformed(InputAction.CallbackContext ctx)
     {
-        if (playerInventoryUI.isDisplay)
+        if (GameManager.instance.otherInventoryUI.isDisplay)
         {
-            playerInventoryUI.isDisplay = false;
+            GameManager.instance.otherInventoryUI.isDisplay = false;
+        }
+
+        if (GameManager.instance.playerInventoryUI.isDisplay)
+        {
+            GameManager.instance.playerInventoryUI.isDisplay = false;
+            GameManager.instance.playerInventoryUI.inChest = false;
             GameManager.instance.gameInput.UI.Disable();
             GameManager.instance.gameInput.Player.Enable();
+            GameManager.instance.playerInventoryUI.informationUI.SetActive(false);
         }
+
     }
 
     private void OnBackPerformed(InputAction.CallbackContext ctx)
@@ -65,10 +72,17 @@ public class UiInput : MonoBehaviour
         {
             BuildUI.instance.isDisplay = false;
         }
-        else if (playerInventoryUI.isDisplay)
+        else if (GameManager.instance.playerInventoryUI.isDisplay)
         {
-            playerInventoryUI.isDisplay = false;
+            GameManager.instance.playerInventoryUI.isDisplay = false;
+            GameManager.instance.playerInventoryUI.informationUI.SetActive(false);
         }
+        if (GameManager.instance.otherInventoryUI.isDisplay)
+        {
+            GameManager.instance.otherInventoryUI.isDisplay = false;
+            GameManager.instance.playerInventoryUI.inChest = false;
+        }
+
         GameManager.instance.gameInput.UI.Disable();
         GameManager.instance.gameInput.Player.Enable();
     }

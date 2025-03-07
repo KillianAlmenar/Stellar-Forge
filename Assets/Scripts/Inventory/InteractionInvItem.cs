@@ -8,9 +8,12 @@ public class InteractionInvItem : MonoBehaviour
     [SerializeField] private GameObject quantity;
     private bool isConsommable = false;
     [SerializeField] InventoryUI inventoryUI;
+    public Inventory currentInv;
+    public Inventory targetInv;
+
     private void Update()
     {
-        if (GameManager.instance.Player.GetComponent<Inventory>().selectedItem is Consommable && !isConsommable)
+        if (currentInv.selectedItem is Consommable && !isConsommable)
         {
             isConsommable = true;
         }
@@ -27,40 +30,42 @@ public class InteractionInvItem : MonoBehaviour
             quantity.SetActive(false);
         }
 
-        if (GameManager.instance.Player.GetComponent<Inventory>().selectedItem is Consommable consommable)
+        if (currentInv.selectedItem is Consommable consommable)
         {
             consommable.Use();
-            GameManager.instance.Player.GetComponent<Inventory>().items.Remove(GameManager.instance.Player.GetComponent<Inventory>().selectedItem);
-            GameManager.instance.Player.GetComponent<Inventory>().selectedItem = null;
+            currentInv.items.Remove(currentInv.selectedItem);
+            currentInv.selectedItem = null;
             inventoryUI.updateUI();
+            gameObject.SetActive(false);
         }
     }
 
     public void UseQuantityPressed()
     {
-        ItemInventory item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
+        ItemInventory item = currentInv.selectedItem;
 
-        if(item as Consommable && item.stackSize > 1 && GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) > 1)
+        if(item as Consommable && item.stackSize > 1 && currentInv.GetNumberOfItem(item) > 1)
         {
             if (!quantity.activeSelf)
             {
                 quantity.SetActive(true);
-                quantity.GetComponent<QuantitySelection>().useButton = true;
+                quantity.GetComponent<QuantitySelection>().buttonPressed = QuantitySelection.QUANTITYBUTTON.USE;
             }
             quantity.transform.position = transform.position + new Vector3(100, 0, 0);
         }
     }
 
-    public void DestroyPressed()
+    public void TransfertPressed()
     {
-        ItemInventory item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
+        ItemInventory item = currentInv.GetComponent<Inventory>().selectedItem;
 
-        if (item.stackSize == 1 || GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)
+        if (item.stackSize == 1 || currentInv.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)
         {
-            GameManager.instance.Player.GetComponent<Inventory>().items.Remove(item);
-            inventoryUI.updateUI();
+            currentInv.items.Remove(item);
+            targetInv.AddItem(item, 1);
 
-            GameManager.instance.Player.GetComponent<Inventory>().selectedItem = null;
+            currentInv.GetComponent<Inventory>().selectedItem = null;
+            gameObject.SetActive(false);
 
         }
         else
@@ -68,12 +73,41 @@ public class InteractionInvItem : MonoBehaviour
             if (!quantity.activeSelf)
             {
                 quantity.SetActive(true);
-                quantity.GetComponent<QuantitySelection>().useButton = false;
+                quantity.GetComponent<QuantitySelection>().buttonPressed = QuantitySelection.QUANTITYBUTTON.TRANSFERT;
             }
             quantity.transform.position = transform.position + new Vector3(100, 0, 0);
 
         }
 
+        GameManager.instance.playerInventoryUI.updateUI();
+        if (GameManager.instance.playerInventoryUI.inChest)
+        {
+            GameManager.instance.otherInventoryUI.updateUI();
+        }
+    }
+
+    public void DestroyPressed()
+    {
+        ItemInventory item = currentInv.GetComponent<Inventory>().selectedItem;
+
+        if (item.stackSize == 1 || currentInv.GetComponent<Inventory>().GetNumberOfItem(item) <= 1)
+        {
+            currentInv.GetComponent<Inventory>().items.Remove(item);
+            inventoryUI.updateUI();
+
+            currentInv.GetComponent<Inventory>().selectedItem = null;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            if (!quantity.activeSelf)
+            {
+                quantity.SetActive(true);
+                quantity.GetComponent<QuantitySelection>().buttonPressed = QuantitySelection.QUANTITYBUTTON.DESTROY;
+            }
+            quantity.transform.position = transform.position + new Vector3(100, 0, 0);
+
+        }
     }
 
     public void BackPressed()
@@ -83,7 +117,9 @@ public class InteractionInvItem : MonoBehaviour
             quantity.SetActive(false);
         }
 
-        GameManager.instance.Player.GetComponent<Inventory>().selectedItem = null;
+        currentInv.GetComponent<Inventory>().selectedItem = null;
+        gameObject.SetActive(false);
+
     }
 
 }

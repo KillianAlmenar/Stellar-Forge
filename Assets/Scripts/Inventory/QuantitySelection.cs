@@ -5,17 +5,32 @@ using UnityEngine;
 
 public class QuantitySelection : MonoBehaviour
 {
+
+    public enum QUANTITYBUTTON
+    {
+        USE,
+        TRANSFERT,
+        DESTROY
+    }
+
     [SerializeField] private TextMeshProUGUI quantityText;
     private int quantity;
     ItemInventory item;
-    public bool useButton = false;
+    public QUANTITYBUTTON buttonPressed;
     [SerializeField] public InventoryUI inventoryUI;
+    Inventory currentInventory;
+    [SerializeField] InteractionInvItem interactionInvItem;
 
     private void Update()
     {
-        if (item != GameManager.instance.Player.GetComponent<Inventory>().selectedItem)
+        if (interactionInvItem != null && currentInventory == null)
         {
-            item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
+            currentInventory = interactionInvItem.currentInv;
+        }
+
+        if (item != currentInventory.selectedItem)
+        {
+            item = currentInventory.selectedItem;
             gameObject.SetActive(false);
         }
     }
@@ -40,17 +55,18 @@ public class QuantitySelection : MonoBehaviour
 
     private void updateText()
     {
-        item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
+        currentInventory = interactionInvItem.currentInv;
+        item = currentInventory.selectedItem;
 
-        if (quantity > item.stackSize || quantity > GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item))
+        if (quantity > item.stackSize || quantity > currentInventory.GetNumberOfItem(item))
         {
             quantity = 1;
         }
         else if (quantity < 1)
         {
-            if (item.stackSize > GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item))
+            if (item.stackSize > currentInventory.GetNumberOfItem(item))
             {
-                quantity = GameManager.instance.Player.GetComponent<Inventory>().GetNumberOfItem(item);
+                quantity = currentInventory.GetNumberOfItem(item);
             }
             else
             {
@@ -63,26 +79,36 @@ public class QuantitySelection : MonoBehaviour
 
     public void OkPressed()
     {
-        item = GameManager.instance.Player.GetComponent<Inventory>().selectedItem;
-
+        item = currentInventory.selectedItem;
         List<ItemInventory> itemToDestroy = new List<ItemInventory>();
 
-        foreach (ItemInventory testedItem in GameManager.instance.Player.GetComponent<Inventory>().items)
+        foreach (ItemInventory testedItem in currentInventory.items)
         {
             if (quantity > 0)
             {
                 if (testedItem == item && testedItem is Consommable consommable)
                 {
-                    if (useButton)
+
+                    switch (buttonPressed)
                     {
-                        consommable.Use();
+                        case QUANTITYBUTTON.USE:
+                            consommable.Use();
+                            break;
+                        case QUANTITYBUTTON.TRANSFERT:
+                            interactionInvItem.targetInv.AddItem(item, 1);
+                            break;
                     }
                     itemToDestroy.Add(item);
                     quantity -= 1;
                 }
 
-                if (!useButton && testedItem == item && testedItem is Ressources ressources)
+                if (testedItem == item && testedItem is Ressources ressources)
                 {
+                    if (buttonPressed == QUANTITYBUTTON.TRANSFERT)
+                    {
+                        interactionInvItem.targetInv.AddItem(item, 1);
+                    }
+
                     itemToDestroy.Add(item);
                     quantity -= 1;
                 }
@@ -93,24 +119,28 @@ public class QuantitySelection : MonoBehaviour
             }
         }
 
-        foreach (ItemInventory testtedItem in itemToDestroy)
+        foreach (ItemInventory testedItem in itemToDestroy)
         {
-            GameManager.instance.Player.GetComponent<Inventory>().items.Remove(testtedItem);
+            currentInventory.items.Remove(testedItem);
         }
 
-        inventoryUI.updateUI();
+        GameManager.instance.playerInventoryUI.updateUI();
+        if (GameManager.instance.playerInventoryUI.inChest)
+        {
+            GameManager.instance.otherInventoryUI.updateUI();
+        }
 
         quantity = 1;
         updateText();
 
 
-        if (!GameManager.instance.Player.GetComponent<Inventory>().items.Contains(item))
+        if (!currentInventory.items.Contains(item))
         {
-            GameManager.instance.Player.GetComponent<Inventory>().selectedItem = null;
+            currentInventory.selectedItem = null;
         }
 
         gameObject.SetActive(false);
-
+        interactionInvItem.gameObject.SetActive(false);
     }
 
 }

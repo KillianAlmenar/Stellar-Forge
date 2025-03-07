@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class SelectItem : MonoBehaviour
 {
-    [SerializeField] private Inventory playerInventory;
+    [SerializeField] private Inventory inventory;
     public ItemInventory item;
     public InventoryUI inventoryUI;
     private void Start()
     {
-        playerInventory = GameManager.instance.Player.GetComponent<Inventory>();
+        inventory = inventoryUI.Inventory;
 
     }
 
     public void buttonPressed()
     {
-        playerInventory.selectedItem = null;
-        inventoryUI.UpdateInformationUI();
-        playerInventory.selectedItem = item;
+        inventory.selectedItem = item;
         inventoryUI.buttonPressed = gameObject;
+        inventoryUI.UpdateInformationUI();
+        inventoryUI.ActivateInteraction();
     }
- 
+
 }

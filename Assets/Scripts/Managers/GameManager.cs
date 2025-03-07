@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
     public bool onShip = false;
     public GameObject Player;
     public bool onKeyboard = true;
-    public InventoryUI playerInventoryUI;
-    public InventoryUI otherInventoryUI;
+    public PlayerInventoryUI playerInventoryUI;
+    public OtherInventoryUI otherInventoryUI;
 
     private void Awake()
     {
