@@ -8,6 +8,8 @@ public class PlayerDetection : MonoBehaviour
     [SerializeField] private GameObject head;
     private bool interactSwitch = false;
     IInteractable interactable;
+    [SerializeField] private float stationRadius = 1;
+    PlayerPhysics physicsScript;
     private void OnEnable()
     {
         GameManager.instance.gameInput.Player.Interact.performed += InteractPerformed;
@@ -18,9 +20,15 @@ public class PlayerDetection : MonoBehaviour
         GameManager.instance.gameInput.Player.Interact.performed -= InteractPerformed;
     }
 
+    private void Start()
+    {
+        physicsScript = GetComponent<PlayerPhysics>();
+    }
+
     void Update()
     {
         CheckObject();
+        DetectStation();
     }
 
     private void CheckObject()
@@ -43,6 +51,22 @@ public class PlayerDetection : MonoBehaviour
             HUDManager.Instance.SwitchInteractObject(false);
         }
     }
+
+    private void DetectStation()
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, stationRadius, Vector3.forward);
+
+        foreach(RaycastHit hit in hits) 
+        {
+            if (hit.transform.root.CompareTag("Station"))
+            {
+                physicsScript.PlanetReference = hit.transform.root.gameObject;
+                physicsScript.onStation = true;
+                break;
+            }
+        }
+
+    }
     
     private void InteractPerformed(InputAction.CallbackContext ctx)
     {
@@ -50,6 +74,12 @@ public class PlayerDetection : MonoBehaviour
         {
             interactable.Interact();
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, stationRadius);
     }
 
 }

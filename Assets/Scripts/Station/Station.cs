@@ -16,8 +16,9 @@ public class Station : MonoBehaviour
             }
             else if (EnterDoor.DoorOpen)
             {
-                GameManager.instance.Player.GetComponent<PlayerPhysics>().onStation = false;
-                GameManager.instance.Player.GetComponent<PlayerPhysics>().onPlanet = false;
+                PlayerPhysics PlayerPhysics = GameManager.instance.Player.GetComponent<PlayerPhysics>();
+                PlayerPhysics.onStation = false;
+                PlayerPhysics.onPlanet = false;
             }
         }
 

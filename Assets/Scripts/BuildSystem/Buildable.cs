@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "Buildable", menuName = "Buildable/Create New Buildable")]
 public class Buildable : ScriptableObject
 {

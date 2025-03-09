@@ -56,7 +56,7 @@ public class CelestialBody : MonoBehaviour
 
             Vector3 gravity = distance.normalized * acceleration;
 
-            if (obj == GameManager.instance.UniversalObject.Contains(obj))
+            if (GameManager.instance.UniversalObject.Contains(obj))
             {
 
                 if (obj.GetComponent<SFPhysics>().onPlanet)
@@ -66,7 +66,16 @@ public class CelestialBody : MonoBehaviour
 
                 Vector3 gravityPlayer = obj.GetComponent<SFPhysics>().forceMultiplier * distance.normalized * acceleration;
 
-                obj.GetComponent<MovableObj>().Rigidbody.AddForce(gravityPlayer, ForceMode.Acceleration);
+                MovableObj objMovable = obj.GetComponent<MovableObj>();
+
+                if(objMovable is SFPhysics physics && physics.onStation)
+                {
+
+                }
+                else
+                {
+                    objMovable.Rigidbody.AddForce(gravityPlayer, ForceMode.Acceleration);
+                }
 
             }
             else

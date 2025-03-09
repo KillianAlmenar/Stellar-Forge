@@ -138,6 +138,10 @@ public class PlayerMovement : Movement
 
             moveScript.SetMove(move);
         }
+        else if(physicsScript.onStation)
+        {
+            rb.AddForce(physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity, ForceMode.Acceleration);
+        }
         else if (isEquiped)
         {
             jumpBtn = false;
