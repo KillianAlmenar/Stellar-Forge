@@ -68,7 +68,7 @@ public class CelestialBody : MonoBehaviour
 
                 MovableObj objMovable = obj.GetComponent<MovableObj>();
 
-                if(objMovable is SFPhysics physics && physics.onStation)
+                if(objMovable is SFPhysics physics && physics.stationNear)
                 {
 
                 }

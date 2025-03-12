@@ -24,6 +24,25 @@ public class Station : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        //if (GameManager.instance.Player.GetComponent<PlayerPhysics>().stationNear || GameManager.instance.Player.GetComponent<PlayerPhysics>().onStation)
+        //{
+        //    if (GameManager.instance.Player.transform.parent == null)
+        //    {
+        //        GameManager.instance.Player.transform.parent = transform.root;
+        //    }
+        //}
+        //else
+        //{
+        //    if (GameManager.instance.Player.transform.parent != null)
+        //    {
+        //        GameManager.instance.Player.transform.parent = null;
+        //    }
+        //}
+
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.tag == "Player")

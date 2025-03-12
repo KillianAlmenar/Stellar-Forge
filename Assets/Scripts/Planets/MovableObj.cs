@@ -8,6 +8,7 @@ public class MovableObj : MonoBehaviour
     protected Rigidbody rb;
     [SerializeField] private bool isOrbital = false;
     [SerializeField] private bool isEllipsal = false;
+    [SerializeField] private bool invertOrbit = false;
     [SerializeField] public GameObject PlanetReference;
     private LineRenderer lineRenderer;
 
@@ -37,6 +38,11 @@ public class MovableObj : MonoBehaviour
             float orbitalSpeed = Mathf.Sqrt(GameManager.instance.gravitationalConstant * PlanetReference.GetComponent<Rigidbody>().mass / distance);
 
             Vector3 tangentialDirection = Vector3.Cross(directionToPlanet.normalized, Vector3.up).normalized;
+
+            if(invertOrbit)
+            {
+                tangentialDirection = -tangentialDirection;
+            }
 
             Vector3 initialSpeed = tangentialDirection * orbitalSpeed;
 

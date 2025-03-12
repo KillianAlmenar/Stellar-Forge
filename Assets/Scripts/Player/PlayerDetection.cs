@@ -39,6 +39,7 @@ public class PlayerDetection : MonoBehaviour
         {
             if (!interactSwitch)
             {
+                Debug.Log("Chest detect");
                 interactable = raycasts.transform.GetComponent<IInteractable>();
                 interactSwitch = true;
                 HUDManager.Instance.SwitchInteractObject(true);
@@ -61,7 +62,7 @@ public class PlayerDetection : MonoBehaviour
             if (hit.transform.root.CompareTag("Station"))
             {
                 physicsScript.PlanetReference = hit.transform.root.gameObject;
-                physicsScript.onStation = true;
+                physicsScript.stationNear = true;
                 break;
             }
         }

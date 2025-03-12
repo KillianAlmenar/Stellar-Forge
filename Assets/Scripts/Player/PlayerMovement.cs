@@ -20,6 +20,8 @@ public class PlayerMovement : Movement
     private BuildSystem buildSystem;
     private bool needStabilize = false;
 
+    private Vector3 stationVec = Vector3.zero;
+
     private void Start()
     {
         moveScript = GetComponent<MovableObj>();
@@ -62,6 +64,7 @@ public class PlayerMovement : Movement
     private void FixedUpdate()
     {
         Move();
+        Rotate();
 
         if (needStabilize)
         {
@@ -78,11 +81,6 @@ public class PlayerMovement : Movement
                 rb.angularVelocity = Vector3.zero;
             }
         }
-    }
-
-    private void Update()
-    {
-        Rotate();
     }
 
     private void Rotate()
@@ -138,12 +136,49 @@ public class PlayerMovement : Movement
 
             moveScript.SetMove(move);
         }
-        else if(physicsScript.onStation)
+        else if (physicsScript.stationNear)
         {
-            rb.AddForce(physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity, ForceMode.Acceleration);
+            jumpBtn = false;
+            rb.velocity = physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
+            move += moveVec.x * transform.right;
+            move += moveVec.y * transform.forward;
+
+            if (up)
+            {
+                move += transform.up * speedCombiUpDown;
+            }
+
+            if (down)
+            {
+                move -= transform.up * speedCombiUpDown;
+            }
+
+            stationVec += move * speedOnEquiped;
+            rb.velocity += stationVec;
+            moveScript.AddGravity(stationVec);
+
+            //moveScript.AddGravity(move * speedOnEquiped);
+            //moveScript.AddGravity(physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity);
+            //jumpBtn = false;
+
+            //move += moveVec.x * transform.right;
+            //move += moveVec.y * transform.forward;
+
+            //if (up)
+            //{
+            //    move += transform.up * speedCombiUpDown;
+            //}
+
+            //if (down)
+            //{
+            //    move -= transform.up * speedCombiUpDown;
+            //}
+
+            //moveScript.AddGravity(move * speedOnEquiped);
         }
         else if (isEquiped)
         {
+
             jumpBtn = false;
             move += moveVec.x * transform.right;
             move += moveVec.y * transform.forward;

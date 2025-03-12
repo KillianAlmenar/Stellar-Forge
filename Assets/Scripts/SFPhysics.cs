@@ -14,6 +14,7 @@ public class SFPhysics : MovableObj
     [SerializeField] private float speed = 0;
     [HideInInspector] public Vector3 planetCollisionPoint;
     public bool onStation = false;
+    public bool stationNear = false;
 
     protected void Update()
     {
