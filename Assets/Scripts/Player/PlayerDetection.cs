@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,19 +29,21 @@ public class PlayerDetection : MonoBehaviour
     void Update()
     {
         CheckObject();
-        DetectStation();
+        if (!physicsScript.onStation)
+        {
+            DetectStation();
+        }
     }
 
     private void CheckObject()
     {
         RaycastHit raycasts;
 
-        if (Physics.Raycast(head.transform.position, head.transform.forward, out raycasts, 10) && raycasts.transform.GetComponent<IInteractable>() != null)
+        if (Physics.Raycast(head.transform.position, head.transform.forward, out raycasts, 10) && raycasts.collider != null && raycasts.collider.gameObject.GetComponent<IInteractable>() != null)
         {
             if (!interactSwitch)
             {
-                Debug.Log("Chest detect");
-                interactable = raycasts.transform.GetComponent<IInteractable>();
+                interactable = raycasts.collider.gameObject.GetComponent<IInteractable>();
                 interactSwitch = true;
                 HUDManager.Instance.SwitchInteractObject(true);
             }
@@ -51,11 +54,14 @@ public class PlayerDetection : MonoBehaviour
             interactSwitch = false;
             HUDManager.Instance.SwitchInteractObject(false);
         }
+
     }
 
     private void DetectStation()
     {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, stationRadius, Vector3.forward);
+
+        bool stationHit = false;
 
         foreach(RaycastHit hit in hits) 
         {
@@ -63,15 +69,22 @@ public class PlayerDetection : MonoBehaviour
             {
                 physicsScript.PlanetReference = hit.transform.root.gameObject;
                 physicsScript.stationNear = true;
+                stationHit = true;
                 break;
             }
+        }
+
+        if(!stationHit)
+        {
+            physicsScript.PlanetReference = null;
+            physicsScript.stationNear = false;
         }
 
     }
     
     private void InteractPerformed(InputAction.CallbackContext ctx)
     {
-        if(interactable != null)
+        if (interactable != null)
         {
             interactable.Interact();
         }
