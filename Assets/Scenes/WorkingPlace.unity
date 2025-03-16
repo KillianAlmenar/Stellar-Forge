@@ -832,7 +832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990616262827802352, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -582.669
+      value: -576.13
       objectReference: {fileID: 0}
     - target: {fileID: 5990616262827802352, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_LocalPosition.y
@@ -840,7 +840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990616262827802352, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.841
+      value: 13.99
       objectReference: {fileID: 0}
     - target: {fileID: 5990616262827802352, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_LocalRotation.w
@@ -927,10 +927,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Station
       objectReference: {fileID: 0}
-    - target: {fileID: 3043235333442263677, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5422805896858030570, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -575.97
@@ -970,10 +966,6 @@ PrefabInstance:
     - target: {fileID: 5422805896858030570, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7252436554034120645, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

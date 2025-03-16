@@ -73,7 +73,6 @@ public class BuildSystem : MonoBehaviour
                 if (slot != hit.transform.GetComponent<ModuleSlot>())
                 {
                     slot = hit.transform.GetComponent<ModuleSlot>();
-                    Debug.Log(slot.transform.name);
                 }
                 return;
 

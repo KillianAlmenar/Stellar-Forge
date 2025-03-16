@@ -7,38 +7,28 @@ public class DoorStation : MonoBehaviour
 {
     public GameObject LeftDoor;
     public GameObject RightDoor;
-    float openTimer = 0;
+    public DoorArea OpeningArea;
+    public DoorArea ClosingArea;
+    [HideInInspector] public float openTimer = 0;
     public bool DoorOpen = false;
 
     private void Update()
     {
-        if(DoorOpen)
+        if (OpeningArea.playerDetected)
         {
+            if (!DoorOpen)
+            {
+                DoorOpen = true;
+            }
             OpenDoor();
         }
-        else
+        else if (!ClosingArea.playerDetected)
         {
+            if (DoorOpen)
+            {
+                DoorOpen = false;
+            }
             CloseDoor();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "Player")
-        {
-            openTimer = 0;
-
-            DoorOpen = true;
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.tag == "Player")
-        {
-            openTimer = 0;
-            DoorOpen = false;
         }
     }
 

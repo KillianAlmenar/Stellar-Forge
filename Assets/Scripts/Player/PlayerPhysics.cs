@@ -50,11 +50,11 @@ public class PlayerPhysics : SFPhysics
 
     private void FixedUpdate()
     {
-        if (onStation && !rb.useGravity) 
+        if (onStation && !rb.useGravity)
         {
             StationSettings();
         }
-        else if(!onPlanet && !onStation && !inSpace)
+        else if (!onPlanet && !onStation && !inSpace)
         {
             SpaceSettings();
         }
@@ -90,8 +90,17 @@ public class PlayerPhysics : SFPhysics
         if (!isJumping)
         {
             inSpace = true;
-            rb.velocity = Vector3.zero;
-            rb.constraints = RigidbodyConstraints.None;
+
+            if (stationNear && PlanetReference != null)
+            {
+               // rb.velocity = PlanetReference.GetComponent<Rigidbody>().velocity;
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+            }
+
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
             alignSpeed = 0.5f;
         }
         rb.useGravity = false;

@@ -156,25 +156,6 @@ public class PlayerMovement : Movement
             stationVec += move * speedOnEquiped;
             rb.velocity += stationVec;
             moveScript.AddGravity(stationVec);
-
-            //moveScript.AddGravity(move * speedOnEquiped);
-            //moveScript.AddGravity(physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity);
-            //jumpBtn = false;
-
-            //move += moveVec.x * transform.right;
-            //move += moveVec.y * transform.forward;
-
-            //if (up)
-            //{
-            //    move += transform.up * speedCombiUpDown;
-            //}
-
-            //if (down)
-            //{
-            //    move -= transform.up * speedCombiUpDown;
-            //}
-
-            //moveScript.AddGravity(move * speedOnEquiped);
         }
         else if (isEquiped)
         {
