@@ -15,12 +15,10 @@ public class PlayerMovement : Movement
 
     [SerializeField] private GameObject head;
 
-    private Vector3 targetRotationVec = Vector3.zero;
-    private Vector3 targetCamVec = Vector3.zero;
     private BuildSystem buildSystem;
     private bool needStabilize = false;
 
-    private Vector3 stationVec = Vector3.zero;
+    public Vector3 stationVec = Vector3.zero;
 
     private void Start()
     {

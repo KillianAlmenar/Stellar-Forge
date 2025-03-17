@@ -93,7 +93,7 @@ public class PlayerPhysics : SFPhysics
 
             if (stationNear && PlanetReference != null)
             {
-               // rb.velocity = PlanetReference.GetComponent<Rigidbody>().velocity;
+                rb.velocity = PlanetReference.GetComponent<Rigidbody>().velocity;
             }
             else
             {
@@ -102,6 +102,7 @@ public class PlayerPhysics : SFPhysics
 
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             alignSpeed = 0.5f;
+           move.stationVec = Vector3.zero;
         }
         rb.useGravity = false;
         forceMultiplier = 100;
