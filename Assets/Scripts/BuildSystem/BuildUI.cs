@@ -1,12 +1,8 @@
-using Cinemachine;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class BuildUI : MonoBehaviour
 {

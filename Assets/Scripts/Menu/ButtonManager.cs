@@ -7,7 +7,7 @@ public class ButtonManager : MonoBehaviour
 {
     public void NewGamePressed()
     {
-        SceneManager.LoadScene("WorkingPlace");
+        SceneManager.LoadScene("Game");
     }
 
     public void ContinuePressed()

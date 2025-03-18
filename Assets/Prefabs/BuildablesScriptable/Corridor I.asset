@@ -18,6 +18,5 @@ MonoBehaviour:
   description: Basic Corridor to expend your base !
   buildableObject: {fileID: 115042, guid: 64b3f36e835346747865afbf6cf62acf, type: 3}
   ressources:
-  - {fileID: 11400000, guid: aea42d4527a8f9a4ea59d73f1e74c1d4, type: 2}
   - {fileID: 11400000, guid: 7b20bd99039f6fc40b3e17ceb60b4d80, type: 2}
   - {fileID: 11400000, guid: 7b20bd99039f6fc40b3e17ceb60b4d80, type: 2}

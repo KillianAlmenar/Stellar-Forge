@@ -6,11 +6,6 @@ public class Station : MonoBehaviour
 {
     [SerializeField] private DoorStation EnterDoor;
 
-    private void Update()
-    {
-        // Debug.Log($"Station velocity : {transform.root.GetComponent<Rigidbody>().velocity}");
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.transform.tag == "Player")
@@ -20,7 +15,7 @@ public class Station : MonoBehaviour
                 GameManager.instance.Player.GetComponent<PlayerPhysics>().onStation = true;
             }
             else if (EnterDoor.DoorOpen)
-            {
+            {                
                 PlayerPhysics PlayerPhysics = GameManager.instance.Player.GetComponent<PlayerPhysics>();
                 PlayerPhysics.onStation = false;
                 PlayerPhysics.onPlanet = false;

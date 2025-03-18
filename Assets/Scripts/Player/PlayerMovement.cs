@@ -18,7 +18,7 @@ public class PlayerMovement : Movement
     private BuildSystem buildSystem;
     private bool needStabilize = false;
 
-    public Vector3 stationVec = Vector3.zero;
+    [HideInInspector] public Vector3 stationVec = Vector3.zero;
 
     private void Start()
     {
@@ -130,7 +130,10 @@ public class PlayerMovement : Movement
                 move += jumpVector;
             }
 
-            move += physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
+            if (physicsScript.PlanetReference != null)
+            {
+                move += physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
+            }
 
             moveScript.SetMove(move);
         }

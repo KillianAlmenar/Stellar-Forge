@@ -24,6 +24,10 @@ public class PlayerDetection : MonoBehaviour
     private void Start()
     {
         physicsScript = GetComponent<PlayerPhysics>();
+        if (physicsScript.startOnStation)
+        {
+            DetectStation();
+        }
     }
 
     void Update()

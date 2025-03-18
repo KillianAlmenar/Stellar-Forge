@@ -5,10 +5,15 @@ public class PlayerPhysics : SFPhysics
     public bool isJumping = false;
     public bool inSpace = false;
     private PlayerMovement move;
+    public bool startOnStation = false;
 
     private void Start()
     {
         move = GetComponent<PlayerMovement>();
+        if (startOnStation)
+        {
+            StationSettings();
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -102,7 +107,7 @@ public class PlayerPhysics : SFPhysics
 
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             alignSpeed = 0.5f;
-           move.stationVec = Vector3.zero;
+            move.stationVec = Vector3.zero;
         }
         rb.useGravity = false;
         forceMultiplier = 100;
