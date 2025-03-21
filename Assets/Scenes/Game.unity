@@ -2016,6 +2016,10 @@ PrefabInstance:
       propertyPath: stationNear
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8451686312162161849, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
+      propertyPath: startOnStation
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

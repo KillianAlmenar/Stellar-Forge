@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject Sun;
     public GameInput gameInput;
     public bool Line = false;
-    [SerializeField]public float gravitationalConstant = 10f;
+    [SerializeField] public float gravitationalConstant = 10f;
     public bool onShip = false;
     public GameObject Player;
     public bool onKeyboard = true;
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-       Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log(Time.timeScale);
     }
 
     private void FixedUpdate()
@@ -44,14 +45,26 @@ public class GameManager : MonoBehaviour
         CheckOnShip();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            Time.timeScale = 10;
+        }
+        else if(Input.GetKeyDown(KeyCode.Y))
+        {
+            Time.timeScale = 1;
+        }
+    }
+
     private void CheckOnShip()
     {
-        if(onShip && gameInput.Player.enabled)
+        if (onShip && gameInput.Player.enabled)
         {
             gameInput.Player.Disable();
             gameInput.Spaceship.Enable();
         }
-        else if(!onShip && gameInput.Spaceship.enabled)
+        else if (!onShip && gameInput.Spaceship.enabled)
         {
             gameInput.Spaceship.Disable();
             gameInput.Player.Enable();
