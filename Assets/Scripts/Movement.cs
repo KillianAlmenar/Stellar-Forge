@@ -10,7 +10,6 @@ public class Movement : MonoBehaviour
     protected Vector2 moveVec = Vector2.zero;
 
     protected SFPhysics physicsScript;
-    protected MovableObj moveScript;
     protected Rigidbody rb;
 
     protected bool up = false;
@@ -21,6 +20,8 @@ public class Movement : MonoBehaviour
     [SerializeField] protected float speedCombiUpDown = 1;
     [SerializeField] public float rotationForce = 0;
     [SerializeField] public float camRotForce = 0;
+    [HideInInspector] public Vector3 stationVec = Vector3.zero;
+
     protected Vector2 camVec = Vector2.zero;
 
     private void Awake()
@@ -48,7 +49,7 @@ public class Movement : MonoBehaviour
         moveVec = Vector2.zero;
         if (physicsScript.onPlanet)
         {
-            moveScript.ResetMove();
+            physicsScript.ResetMove();
         }
         isMoving = false;
 
@@ -96,7 +97,7 @@ public class Movement : MonoBehaviour
 
         camVec = new Vector3(-ctx.ReadValue<Vector2>().y, 0, 0);
 
-        if(ctx.action.activeControl.device.name == "Mouse" && !GameManager.instance.onKeyboard)
+        if (ctx.action.activeControl.device.name == "Mouse" && !GameManager.instance.onKeyboard)
         {
             GameManager.instance.onKeyboard = true;
         }

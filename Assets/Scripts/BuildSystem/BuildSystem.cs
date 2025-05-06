@@ -162,6 +162,7 @@ public class BuildSystem : MonoBehaviour
         if (canBuild)
         {
             slot.PlaceBuildable(selectedBuildable, currentHoloRotation, buildHolo.transform.position);
+
             isBuilding = false;
             canBuild= false;
             Destroy(buildHolo);

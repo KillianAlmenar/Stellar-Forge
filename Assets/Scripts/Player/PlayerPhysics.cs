@@ -24,6 +24,7 @@ public class PlayerPhysics : SFPhysics
             {
                 PlanetReference = collision.gameObject;
                 PlanetSettings();
+                
                 onPlanet = true;
             }
 
@@ -77,6 +78,7 @@ public class PlayerPhysics : SFPhysics
         inSpace = false;
         onPlanet = true;
         rb.useGravity = true;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
         forceMultiplier = 10f;
@@ -84,6 +86,7 @@ public class PlayerPhysics : SFPhysics
 
     public void PlanetSettings()
     {
+        rb.interpolation = RigidbodyInterpolation.None;
         inSpace = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         alignSpeed = 25;
@@ -109,6 +112,7 @@ public class PlayerPhysics : SFPhysics
             alignSpeed = 0.5f;
             move.stationVec = Vector3.zero;
         }
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.useGravity = false;
         forceMultiplier = 100;
     }

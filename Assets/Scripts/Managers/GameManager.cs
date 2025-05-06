@@ -32,17 +32,12 @@ public class GameManager : MonoBehaviour
         gameInput = new GameInput();
         gameInput.Enable();
         gameInput.UI.Disable();
+        gameInput.Spaceship.Disable();
     }
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log(Time.timeScale);
-    }
-
-    private void FixedUpdate()
-    {
-        CheckOnShip();
     }
 
     private void Update()
@@ -54,20 +49,6 @@ public class GameManager : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Y))
         {
             Time.timeScale = 1;
-        }
-    }
-
-    private void CheckOnShip()
-    {
-        if (onShip && gameInput.Player.enabled)
-        {
-            gameInput.Player.Disable();
-            gameInput.Spaceship.Enable();
-        }
-        else if (!onShip && gameInput.Spaceship.enabled)
-        {
-            gameInput.Spaceship.Disable();
-            gameInput.Player.Enable();
         }
     }
 

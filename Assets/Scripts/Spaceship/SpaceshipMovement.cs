@@ -9,7 +9,6 @@ public class SpaceshipMovement : Movement
     [HideInInspector] public bool onPlanet = false;
     void Start()
     {
-        moveScript = GetComponent<MovableObj>();
         physicsScript = GetComponent<SpaceshipPhysics>();
     }
 
@@ -40,18 +39,30 @@ public class SpaceshipMovement : Movement
 
     void FixedUpdate()
     {
-        Rotate();
         Move();
+        if (!physicsScript.onStation)
+        {
+            Rotate();
+        }
     }
 
     private void Rotate()
     {
+        float speedMultiplier;
 
-        transform.Rotate(rotationVec);
+        if (GameManager.instance.onKeyboard)
+        {
+            speedMultiplier = Settings.instance.mouseSensitivity;
+        }
+        else
+        {
+            speedMultiplier = Settings.instance.gamepadSensitivity;
+        }
+        transform.Rotate(rotationVec * speedMultiplier);
 
         if (isEquiped && !onPlanet)
         {
-            transform.Rotate(camVec);
+            transform.Rotate(camVec * speedMultiplier);
         }
 
     }
@@ -60,20 +71,47 @@ public class SpaceshipMovement : Movement
     {
         Vector3 move = Vector3.zero;
 
-        move += moveVec.x * transform.right;
-        move += moveVec.y * transform.forward;
+        if (physicsScript.stationNear)
+        {
+            rb.velocity = physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
+        }
+
+        if(!physicsScript.onStation)
+        {
+            move += moveVec.x * transform.right;
+            move += moveVec.y * transform.forward;
+
+            if (down)
+            {
+                move -= transform.up * speedCombiUpDown;
+            }
+        }
 
         if (up)
         {
             move += transform.up * speedCombiUpDown;
         }
 
-        if (down)
+        if (physicsScript.stationNear)
         {
-            move -= transform.up * speedCombiUpDown;
+            stationVec += move * speedOnEquiped;
+            rb.velocity += stationVec;
+            physicsScript.AddGravity(stationVec);
+        }
+        else
+        {
+            physicsScript.AddGravity(move * speedOnEquiped);
         }
 
-        moveScript.AddGravity(move * speedOnEquiped);
 
+    }
+
+    public void PlayerInteract()
+    {
+        //Get player into spaceship
+        GameManager.instance.onShip = true;
+        CameraManager.instance.SwitchSpaceshipCam();
+        GameManager.instance.gameInput.Spaceship.Enable();
+        GameManager.instance.gameInput.Player.Disable();
     }
 }

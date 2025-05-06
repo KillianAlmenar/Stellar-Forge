@@ -11,6 +11,7 @@ public class PlayerDetection : MonoBehaviour
     IInteractable interactable;
     [SerializeField] private float stationRadius = 1;
     PlayerPhysics physicsScript;
+    [SerializeField] GameObject SpaceShip;
     private void OnEnable()
     {
         GameManager.instance.gameInput.Player.Interact.performed += InteractPerformed;
@@ -33,7 +34,7 @@ public class PlayerDetection : MonoBehaviour
     void Update()
     {
         CheckObject();
-        if (!physicsScript.onStation)
+        if (!physicsScript.onStation && !physicsScript.onPlanet)
         {
             DetectStation();
         }
@@ -43,22 +44,38 @@ public class PlayerDetection : MonoBehaviour
     {
         RaycastHit raycasts;
 
-        if (Physics.Raycast(head.transform.position, head.transform.forward, out raycasts, 10) && raycasts.collider != null && raycasts.collider.gameObject.GetComponent<IInteractable>() != null)
+        if (Physics.Raycast(head.transform.position, head.transform.forward, out raycasts, 10))
         {
-            if (!interactSwitch)
+            if (raycasts.collider != null && raycasts.collider.gameObject.GetComponent<IInteractable>() != null)
             {
-                interactable = raycasts.collider.gameObject.GetComponent<IInteractable>();
+                if (!interactSwitch)
+                {
+                    interactable = raycasts.collider.gameObject.GetComponent<IInteractable>();
+                    interactSwitch = true;
+                    HUDManager.Instance.SwitchInteractObject(true, "Press right click to interact");
+                }
+
+            }
+            else if (interactable != null)
+            {
+                interactable = null;
+                interactSwitch = false;
+                HUDManager.Instance.SwitchInteractObject(false);
+            }
+
+            if (raycasts.transform.CompareTag("Spaceship"))
+            {
+                SpaceShip = raycasts.transform.gameObject;
                 interactSwitch = true;
-                HUDManager.Instance.SwitchInteractObject(true);
+                HUDManager.Instance.SwitchInteractObject(true, "Press right click to get into the Spaceship");
+            }
+            else if(SpaceShip != null)
+            {
+                interactSwitch = false;
+                SpaceShip = null;
+                HUDManager.Instance.SwitchInteractObject(false);
             }
         }
-        else if (interactSwitch)
-        {
-            interactable = null;
-            interactSwitch = false;
-            HUDManager.Instance.SwitchInteractObject(false);
-        }
-
     }
 
     private void DetectStation()
@@ -67,7 +84,7 @@ public class PlayerDetection : MonoBehaviour
 
         bool stationHit = false;
 
-        foreach(RaycastHit hit in hits) 
+        foreach (RaycastHit hit in hits)
         {
             if (hit.transform.root.CompareTag("Station"))
             {
@@ -78,20 +95,26 @@ public class PlayerDetection : MonoBehaviour
             }
         }
 
-        if(!stationHit)
+        if (!stationHit)
         {
             physicsScript.PlanetReference = null;
             physicsScript.stationNear = false;
         }
 
     }
-    
+
     private void InteractPerformed(InputAction.CallbackContext ctx)
     {
         if (interactable != null)
         {
             interactable.Interact();
         }
+
+        if(SpaceShip != null)
+        {
+            SpaceShip.GetComponent<SpaceshipMovement>().PlayerInteract();
+        }
+
     }
 
     private void OnDrawGizmos()

@@ -1,20 +1,21 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Garage : MonoBehaviour
+public class Garage : MainModule
 {
     [SerializeField] GameObject spaceShip;
     [SerializeField] Transform shipSpawnTransform;
 
-    public void SpawnShip()
+    public override void onSpawn()
     {
-        if(GameManager.instance.UniversalObject.Contains(spaceShip))
+        if (GameManager.instance.UniversalObject.Contains(spaceShip))
         {
-            foreach(GameObject obj in GameManager.instance.UniversalObject)
+            foreach (GameObject obj in GameManager.instance.UniversalObject)
             {
-                if(obj == spaceShip)
+                if (obj == spaceShip)
                 {
                     obj.transform.position = shipSpawnTransform.position;
                     obj.transform.rotation = shipSpawnTransform.rotation;
@@ -23,7 +24,11 @@ public class Garage : MonoBehaviour
         }
         else
         {
-            Instantiate(spaceShip, shipSpawnTransform.position, shipSpawnTransform.rotation);
+            GameObject spaceship = Instantiate(spaceShip, shipSpawnTransform.position, shipSpawnTransform.rotation);
+            CameraManager.instance.spaceShipCam = spaceship.GetComponentInChildren<CinemachineVirtualCamera>();
+            spaceship.GetComponent<SpaceshipPhysics>().onStation = true;
+            GameManager.instance.UniversalObject.Add(spaceship);
         }
     }
+
 }

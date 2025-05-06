@@ -31,6 +31,12 @@ public class ModuleSlot : MonoBehaviour
         buildableObj.tag = "Module Slot";
         Destroy(otherAnchorToDestroy.gameObject);
 
+        if (buildableObj.GetComponent<MainModule>() != null)
+        {
+            buildableObj.GetComponent<MainModule>().onSpawn();
+        }
+
+
         switch (type)
         {
             case TYPE.CORRIDOR:

@@ -18,11 +18,9 @@ public class PlayerMovement : Movement
     private BuildSystem buildSystem;
     private bool needStabilize = false;
 
-    [HideInInspector] public Vector3 stationVec = Vector3.zero;
 
     private void Start()
     {
-        moveScript = GetComponent<MovableObj>();
         physicsScript = GetComponent<PlayerPhysics>();
         buildSystem = GetComponent<BuildSystem>();
     }
@@ -135,7 +133,7 @@ public class PlayerMovement : Movement
                 move += physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
             }
 
-            moveScript.SetMove(move);
+            physicsScript.SetMove(move);
         }
         else if (physicsScript.stationNear)
         {
@@ -156,7 +154,7 @@ public class PlayerMovement : Movement
 
             stationVec += move * speedOnEquiped;
             rb.velocity += stationVec;
-            moveScript.AddGravity(stationVec);
+            physicsScript.AddGravity(stationVec);
         }
         else if (isEquiped)
         {
@@ -175,7 +173,7 @@ public class PlayerMovement : Movement
                 move -= transform.up * speedCombiUpDown;
             }
 
-            moveScript.AddGravity(move * speedOnEquiped);
+            physicsScript.AddGravity(move * speedOnEquiped);
         }
         else
         {

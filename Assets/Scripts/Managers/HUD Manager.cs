@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HUDManager : MonoBehaviour
@@ -19,10 +20,11 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void SwitchInteractObject(bool isDetected)
+    public void SwitchInteractObject(bool isDetected, string _textToDisplay = "")
     {
         if(!InteractObj.activeSelf && isDetected) 
         {
+            InteractObj.GetComponentInChildren<TextMeshProUGUI>().text = _textToDisplay;
             InteractObj.SetActive(true);
         }
         else if(InteractObj.activeSelf && !isDetected) 
