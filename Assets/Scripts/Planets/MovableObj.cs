@@ -39,14 +39,14 @@ public class MovableObj : MonoBehaviour
 
             Vector3 tangentialDirection = Vector3.Cross(directionToPlanet.normalized, Vector3.up).normalized;
 
-            if(invertOrbit)
+            if (invertOrbit)
             {
                 tangentialDirection = -tangentialDirection;
             }
 
             Vector3 initialSpeed = tangentialDirection * orbitalSpeed;
 
-            if(isEllipsal)
+            if (isEllipsal)
             {
                 initialSpeed /= 1.15f;
             }
@@ -76,7 +76,7 @@ public class MovableObj : MonoBehaviour
 
     public void SetMove(Vector3 force)
     {
-        if(force != Vector3.zero) 
+        if (force != Vector3.zero)
         {
             rb.velocity = force;
         }

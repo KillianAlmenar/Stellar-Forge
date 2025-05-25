@@ -1945,6 +1945,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2859782757226073624, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2859782757226073624, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
@@ -1953,6 +1957,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2934023041393823771, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583862039556313529, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -2035,6 +2043,10 @@ PrefabInstance:
     - target: {fileID: 8165812037981859905, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: far clip plane
       value: 50000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451686312162161849, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
+      propertyPath: distance
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8451686312162161849, guid: 4f7693de6029be6419be5e1a42674c20, type: 3}
       propertyPath: onPlanet
@@ -3019,6 +3031,14 @@ PrefabInstance:
     - target: {fileID: 6809583351578490313, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252436554034120645, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252436554034120645, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
+      propertyPath: m_Constraints
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7252436554034120645, guid: 3d9747d39aae5674fabab69ce1abf9b1, type: 3}
       propertyPath: m_IsKinematic

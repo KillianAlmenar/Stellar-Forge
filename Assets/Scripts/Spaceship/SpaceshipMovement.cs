@@ -110,6 +110,8 @@ public class SpaceshipMovement : Movement
     {
         //Get player into spaceship
         GameManager.instance.onShip = true;
+        GameManager.instance.Player.SetActive(false);
+        HUDManager.Instance.SwitchInteractObject(false);
         CameraManager.instance.SwitchSpaceshipCam();
         GameManager.instance.gameInput.Spaceship.Enable();
         GameManager.instance.gameInput.Player.Disable();

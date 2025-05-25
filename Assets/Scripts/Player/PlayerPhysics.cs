@@ -6,6 +6,7 @@ public class PlayerPhysics : SFPhysics
     public bool inSpace = false;
     private PlayerMovement move;
     public bool startOnStation = false;
+    public float distance = 1;
 
     private void Start()
     {
@@ -24,7 +25,7 @@ public class PlayerPhysics : SFPhysics
             {
                 PlanetReference = collision.gameObject;
                 PlanetSettings();
-                
+
                 onPlanet = true;
             }
 
@@ -66,6 +67,16 @@ public class PlayerPhysics : SFPhysics
         }
 
         PlanetNormal();
+
+        if (onStation)
+        {
+            if (!Physics.Raycast(transform.position, -transform.up, distance))
+            {
+                AddGravity(-transform.up);
+            }
+
+        }
+
     }
 
     private new void Update()
@@ -77,7 +88,7 @@ public class PlayerPhysics : SFPhysics
     {
         inSpace = false;
         onPlanet = true;
-        rb.useGravity = true;
+        //rb.useGravity = true;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
@@ -113,7 +124,7 @@ public class PlayerPhysics : SFPhysics
             move.stationVec = Vector3.zero;
         }
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.useGravity = false;
+        //rb.useGravity = false;
         forceMultiplier = 100;
     }
 

@@ -132,7 +132,6 @@ public class PlayerMovement : Movement
             {
                 move += physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
             }
-
             physicsScript.SetMove(move);
         }
         else if (physicsScript.stationNear)
