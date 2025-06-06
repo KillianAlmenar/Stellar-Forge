@@ -29,16 +29,14 @@ public class CelestialBody : MonoBehaviour
                 obj.GetComponent<MovableObj>().PlanetReference = this.gameObject;
             }
         }
+
+        GameManager.instance.onUniversalObjectChange += UpdateAttrackedObj;
     }
 
     private void Start()
     {
         mass = GetComponent<Rigidbody>().mass;
 
-        foreach(GameObject obj in GameManager.instance.UniversalObject)
-        {
-            objAttracked.Add(obj);
-        }
     }
 
     private void FixedUpdate()
@@ -137,6 +135,17 @@ public class CelestialBody : MonoBehaviour
             return acceleration;
         }
 
+    }
+
+    private void UpdateAttrackedObj()
+    {
+        foreach (GameObject obj in GameManager.instance.UniversalObject)
+        {
+            if(!objAttracked.Contains(obj))
+            {
+                objAttracked.Add(obj);
+            }
+        }
     }
 
     private void OnDrawGizmos()

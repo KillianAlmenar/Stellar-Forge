@@ -11,6 +11,7 @@ public class GarageTrigger : MonoBehaviour
         if (spaceshipPhysics != null)
         {
             spaceshipPhysics.onStation = false;
+            spaceshipPhysics.onPlanet = false;
         }
     }
 }

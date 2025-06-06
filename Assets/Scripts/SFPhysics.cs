@@ -16,6 +16,7 @@ public class SFPhysics : MovableObj
     public bool onStation = false;
     public bool stationNear = false;
 
+
     protected void Update()
     {
         timeWithoutAlign += Time.deltaTime;
@@ -34,7 +35,6 @@ public class SFPhysics : MovableObj
         else if (planetNormal != null)
         {
             alignmentVector = -planetNormal;
-
         }
         else
         {

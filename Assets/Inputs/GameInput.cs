@@ -384,7 +384,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""12a761f9-9672-41ec-9f81-12a66da3bf62"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -450,7 +450,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8711a29d-4993-48fa-b2ae-2a796ef85158"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -518,6 +518,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""11605c31-b4bd-457a-ba3a-97a2e1b63db6"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Leave"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5104a85-52fa-40da-b51f-2984deca82c4"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -743,6 +752,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""419f745a-a0ce-4944-8f40-c6c1b4ea5a11"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Leave"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -892,6 +912,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Spaceship_Up = m_Spaceship.FindAction("Up", throwIfNotFound: true);
         m_Spaceship_Down = m_Spaceship.FindAction("Down", throwIfNotFound: true);
         m_Spaceship_Rotate = m_Spaceship.FindAction("Rotate", throwIfNotFound: true);
+        m_Spaceship_Leave = m_Spaceship.FindAction("Leave", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseInventory = m_UI.FindAction("CloseInventory", throwIfNotFound: true);
@@ -1088,6 +1109,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Spaceship_Up;
     private readonly InputAction m_Spaceship_Down;
     private readonly InputAction m_Spaceship_Rotate;
+    private readonly InputAction m_Spaceship_Leave;
     public struct SpaceshipActions
     {
         private @GameInput m_Wrapper;
@@ -1096,6 +1118,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Up => m_Wrapper.m_Spaceship_Up;
         public InputAction @Down => m_Wrapper.m_Spaceship_Down;
         public InputAction @Rotate => m_Wrapper.m_Spaceship_Rotate;
+        public InputAction @Leave => m_Wrapper.m_Spaceship_Leave;
         public InputActionMap Get() { return m_Wrapper.m_Spaceship; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1117,6 +1140,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
+            @Leave.started += instance.OnLeave;
+            @Leave.performed += instance.OnLeave;
+            @Leave.canceled += instance.OnLeave;
         }
 
         private void UnregisterCallbacks(ISpaceshipActions instance)
@@ -1133,6 +1159,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
+            @Leave.started -= instance.OnLeave;
+            @Leave.performed -= instance.OnLeave;
+            @Leave.canceled -= instance.OnLeave;
         }
 
         public void RemoveCallbacks(ISpaceshipActions instance)
@@ -1250,6 +1279,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnLeave(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

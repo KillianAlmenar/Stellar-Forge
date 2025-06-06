@@ -28,6 +28,7 @@ public class Garage : MainModule
             CameraManager.instance.spaceShipCam = spaceship.GetComponentInChildren<CinemachineVirtualCamera>();
             spaceship.GetComponent<SpaceshipPhysics>().onStation = true;
             GameManager.instance.UniversalObject.Add(spaceship);
+            GameManager.instance.onUniversalObjectChange?.Invoke();
         }
     }
 

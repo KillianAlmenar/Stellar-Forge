@@ -52,7 +52,7 @@ public class PlayerDetection : MonoBehaviour
                 {
                     interactable = raycasts.collider.gameObject.GetComponent<IInteractable>();
                     interactSwitch = true;
-                    HUDManager.Instance.SwitchInteractObject(true, "Press right click to interact");
+                    HUDManager.Instance.SwitchInteractObject(true, "Press left click to interact");
                 }
 
             }
@@ -67,7 +67,7 @@ public class PlayerDetection : MonoBehaviour
             {
                 SpaceShip = raycasts.transform.gameObject;
                 interactSwitch = true;
-                HUDManager.Instance.SwitchInteractObject(true, "Press right click to get into the Spaceship");
+                HUDManager.Instance.SwitchInteractObject(true, "Press left click to get into the Spaceship");
             }
             else if(SpaceShip != null)
             {

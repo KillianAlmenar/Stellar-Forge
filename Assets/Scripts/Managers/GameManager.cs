@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public PlayerInventoryUI playerInventoryUI;
     public OtherInventoryUI otherInventoryUI;
 
+    public delegate void MyDelegate();
+    public MyDelegate onUniversalObjectChange;
+
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        onUniversalObjectChange?.Invoke();
     }
 
     private void Update()
@@ -51,5 +55,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+
 
 }

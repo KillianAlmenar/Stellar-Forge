@@ -55,6 +55,7 @@ public class PlayerPhysics : SFPhysics
         }
     }
 
+
     private void FixedUpdate()
     {
         if (onStation && !rb.useGravity)
@@ -88,7 +89,6 @@ public class PlayerPhysics : SFPhysics
     {
         inSpace = false;
         onPlanet = true;
-        //rb.useGravity = true;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
@@ -124,7 +124,6 @@ public class PlayerPhysics : SFPhysics
             move.stationVec = Vector3.zero;
         }
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        //rb.useGravity = false;
         forceMultiplier = 100;
     }
 
@@ -139,6 +138,16 @@ public class PlayerPhysics : SFPhysics
             }
 
         }
+    }
+
+    //Spawn the player when leaving Spaceship
+
+    public void SpawnPlayer(bool _onStation, Vector3 spawnPos)
+    {
+        gameObject.SetActive(true);
+        transform.position = spawnPos;
+        onStation = _onStation;
+        onPlanet = _onStation;
     }
 
 }

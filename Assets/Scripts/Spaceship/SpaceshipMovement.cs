@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class SpaceshipMovement : Movement
 {
-    [HideInInspector] public bool onPlanet = false;
+    [SerializeField] private Transform playerSpawn;
     void Start()
     {
         physicsScript = GetComponent<SpaceshipPhysics>();
@@ -22,6 +22,7 @@ public class SpaceshipMovement : Movement
         GameManager.instance.gameInput.Spaceship.Down.canceled += OnDownCanceled;
         GameManager.instance.gameInput.Spaceship.Rotate.performed += OnRotatePerformed;
         GameManager.instance.gameInput.Spaceship.Rotate.canceled += OnRotateCanceled;
+        GameManager.instance.gameInput.Spaceship.Leave.performed += OnLeavePerformed;
 
     }
 
@@ -35,15 +36,13 @@ public class SpaceshipMovement : Movement
         GameManager.instance.gameInput.Spaceship.Down.canceled -= OnDownCanceled;
         GameManager.instance.gameInput.Spaceship.Rotate.performed -= OnRotatePerformed;
         GameManager.instance.gameInput.Spaceship.Rotate.canceled -= OnRotateCanceled;
+        GameManager.instance.gameInput.Spaceship.Leave.performed -= OnLeavePerformed;
     }
 
     void FixedUpdate()
     {
         Move();
-        if (!physicsScript.onStation)
-        {
-            Rotate();
-        }
+        Rotate();
     }
 
     private void Rotate()
@@ -58,10 +57,10 @@ public class SpaceshipMovement : Movement
         {
             speedMultiplier = Settings.instance.gamepadSensitivity;
         }
-        transform.Rotate(rotationVec * speedMultiplier);
 
-        if (isEquiped && !onPlanet)
+        if (!physicsScript.onPlanet && !physicsScript.onStation)
         {
+            transform.Rotate(rotationVec * speedMultiplier);
             transform.Rotate(camVec * speedMultiplier);
         }
 
@@ -71,12 +70,12 @@ public class SpaceshipMovement : Movement
     {
         Vector3 move = Vector3.zero;
 
-        if (physicsScript.stationNear)
+        if (physicsScript.stationNear || (physicsScript.onPlanet && !physicsScript.onStation))
         {
             rb.velocity = physicsScript.PlanetReference.GetComponent<Rigidbody>().velocity;
         }
 
-        if(!physicsScript.onStation)
+        if (!physicsScript.onPlanet && !physicsScript.onStation)
         {
             move += moveVec.x * transform.right;
             move += moveVec.y * transform.forward;
@@ -112,8 +111,22 @@ public class SpaceshipMovement : Movement
         GameManager.instance.onShip = true;
         GameManager.instance.Player.SetActive(false);
         HUDManager.Instance.SwitchInteractObject(false);
+        HUDManager.Instance.SwitchLeaveSpaceship(true);
         CameraManager.instance.SwitchSpaceshipCam();
         GameManager.instance.gameInput.Spaceship.Enable();
         GameManager.instance.gameInput.Player.Disable();
+    }
+
+    public void OnLeavePerformed(InputAction.CallbackContext ctx)
+    {
+        GameManager.instance.onShip = false;
+
+
+        GameManager.instance.Player.GetComponent<PlayerPhysics>().SpawnPlayer(physicsScript.onStation, playerSpawn.position);
+
+        HUDManager.Instance.SwitchLeaveSpaceship(false);
+        CameraManager.instance.SwitchSpaceshipCam();
+        GameManager.instance.gameInput.Spaceship.Disable();
+        GameManager.instance.gameInput.Player.Enable();
     }
 }

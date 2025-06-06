@@ -362,7 +362,7 @@
                 {
                     "name": "",
                     "id": "12a761f9-9672-41ec-9f81-12a66da3bf62",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -428,7 +428,7 @@
                 {
                     "name": "",
                     "id": "8711a29d-4993-48fa-b2ae-2a796ef85158",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -496,6 +496,15 @@
                     "type": "PassThrough",
                     "id": "11605c31-b4bd-457a-ba3a-97a2e1b63db6",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Leave",
+                    "type": "Button",
+                    "id": "a5104a85-52fa-40da-b51f-2984deca82c4",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -719,6 +728,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "419f745a-a0ce-4944-8f40-c6c1b4ea5a11",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Leave",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
